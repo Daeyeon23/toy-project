@@ -3,6 +3,7 @@
 import { useDiagnosis } from "@/hooks/use-diagnosis";
 import { BreadTypePicker } from "@/components/bread-doctor/bread-type-picker";
 import { SymptomChecklist } from "@/components/bread-doctor/symptom-checklist";
+import { DiscriminatorQuestionCard } from "@/components/bread-doctor/discriminator-question";
 import { ResultCards } from "@/components/bread-doctor/result-cards";
 import { Badge } from "@/components/ui/badge";
 import { InfoIcon } from "lucide-react";
@@ -43,6 +44,13 @@ export function BreadDoctor() {
             onDiagnose={diagnosis.runDiagnosis}
           />
         </section>
+      )}
+
+      {diagnosis.step === "question" && diagnosis.outcome?.kind === "question" && (
+        <DiscriminatorQuestionCard
+          question={diagnosis.outcome.question}
+          onAnswer={diagnosis.answerDiscriminatorQuestion}
+        />
       )}
 
       {diagnosis.step === "result" && diagnosis.outcome?.kind === "result" && (

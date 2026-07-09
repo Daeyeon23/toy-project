@@ -76,4 +76,56 @@ describe("BreadDoctor", () => {
     expect(screen.queryByText("과발효")).not.toBeInTheDocument();
     expect(screen.getByText("오븐 온도가 높음")).toBeInTheDocument();
   });
+
+  it("Scenario 3: 근접 원인(안부풂+속떡짐)은 판별 질문을 먼저 보여준다", async () => {
+    render(<BreadDoctor />);
+
+    await userEvent.click(screen.getByRole("button", { name: "식빵" }));
+    await userEvent.click(screen.getByLabelText("전혀/거의 안 부풂"));
+    await userEvent.click(screen.getByLabelText("속이 떡짐 / 질음"));
+    await userEvent.click(screen.getByRole("button", { name: /진단하기/ }));
+
+    expect(screen.getByText("확인 질문")).toBeInTheDocument();
+    expect(
+      screen.getByText("1차 발효 때 반죽이 부풀긴 했나요?"),
+    ).toBeInTheDocument();
+    expect(screen.queryByText("발효 부족")).not.toBeInTheDocument();
+  });
+
+  it("Scenario 3: 판별 질문에 예로 답하면 1순위가 발효 부족이다", async () => {
+    render(<BreadDoctor />);
+
+    await userEvent.click(screen.getByRole("button", { name: "식빵" }));
+    await userEvent.click(screen.getByLabelText("전혀/거의 안 부풂"));
+    await userEvent.click(screen.getByLabelText("속이 떡짐 / 질음"));
+    await userEvent.click(screen.getByRole("button", { name: /진단하기/ }));
+    await userEvent.click(screen.getByRole("button", { name: "예" }));
+
+    expect(screen.getByText("발효 부족")).toBeInTheDocument();
+  });
+
+  it("Scenario 3: 판별 질문에 아니오로 답하면 1순위가 이스트 문제다", async () => {
+    render(<BreadDoctor />);
+
+    await userEvent.click(screen.getByRole("button", { name: "식빵" }));
+    await userEvent.click(screen.getByLabelText("전혀/거의 안 부풂"));
+    await userEvent.click(screen.getByLabelText("속이 떡짐 / 질음"));
+    await userEvent.click(screen.getByRole("button", { name: /진단하기/ }));
+    await userEvent.click(screen.getByRole("button", { name: "아니오" }));
+
+    expect(screen.getByText("이스트 문제")).toBeInTheDocument();
+  });
+
+  it("Scenario 4: 건너뛰기를 누르면 두 후보가 모두 표시된다", async () => {
+    render(<BreadDoctor />);
+
+    await userEvent.click(screen.getByRole("button", { name: "식빵" }));
+    await userEvent.click(screen.getByLabelText("전혀/거의 안 부풂"));
+    await userEvent.click(screen.getByLabelText("속이 떡짐 / 질음"));
+    await userEvent.click(screen.getByRole("button", { name: /진단하기/ }));
+    await userEvent.click(screen.getByRole("button", { name: /건너뛰기/ }));
+
+    expect(screen.getByText("이스트 문제")).toBeInTheDocument();
+    expect(screen.getByText("발효 부족")).toBeInTheDocument();
+  });
 });

@@ -3,7 +3,7 @@
 import { useCallback, useState } from "react";
 import { BREAD_TYPES } from "@/config/bread-doctor";
 import { SYMPTOMS } from "@/lib/bread-doctor/knowledge-base";
-import { diagnose } from "@/lib/bread-doctor/scoring";
+import { answerQuestion, diagnose } from "@/lib/bread-doctor/scoring";
 import type { BreadType, DiagnosisOutcome, Symptom } from "@/types/bread-doctor";
 
 export type Step = "bread" | "symptoms" | "question" | "result";
@@ -17,6 +17,7 @@ export interface UseDiagnosisResult {
   selectBread: (breadTypeId: string) => void;
   toggleSymptom: (symptomId: string) => void;
   runDiagnosis: () => void;
+  answerDiscriminatorQuestion: (answer: "yes" | "no" | "skip") => void;
   restart: () => void;
 }
 
@@ -46,6 +47,16 @@ export function useDiagnosis(): UseDiagnosisResult {
     setStep(result.kind === "question" ? "question" : "result");
   }, [selectedSymptomIds, questionsAskedCount]);
 
+  const answerDiscriminatorQuestion = useCallback(
+    (answer: "yes" | "no" | "skip") => {
+      if (outcome?.kind !== "question") return;
+      setOutcome(answerQuestion(outcome, answer));
+      setQuestionsAskedCount((count) => count + 1);
+      setStep("result");
+    },
+    [outcome],
+  );
+
   const restart = useCallback(() => {
     setOutcome(null);
     setQuestionsAskedCount(0);
@@ -61,6 +72,7 @@ export function useDiagnosis(): UseDiagnosisResult {
     selectBread,
     toggleSymptom,
     runDiagnosis,
+    answerDiscriminatorQuestion,
     restart,
   };
 }
