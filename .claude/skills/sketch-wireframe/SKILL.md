@@ -88,6 +88,7 @@ spec.md에서 시각적 변경이 있는 모든 시나리오가 wireframe 화면
 
 ## Principles
 
+- **화면 간 이동 컨트롤은 spec의 시나리오 전환에 대응하는 것만 그린다** — "뒤로가기"·"취소" 같은 네비게이션을 추가하기 전에 spec.md에 그 전환이 실제로 있는지 확인한다. 없으면 넣지 않거나 사용자에게 먼저 확인한다. 여러 화면을 넘나드는 wireframe을 그릴 때 "당연히 있어야 할 것 같은" 이동 경로를 추가하기 쉬운데, 이는 spec에 없는 범위 확장이라 이후 plan 단계에서 잡히거나(재작업 비용) 그대로 구현되어 버린다(범위 드리프트).
 - **5개의 CSS 변수만 쓴다** (`--w-bg`, `--w-border`, `--w-text`, `--w-muted`, `--w-fill`) 그 외 색상은 쓰지 않는다 — wireframe은 시각 디자인이 아니라 구조를 검증한다. 팔레트를 미니멀하게 고정해야 사용자의 주의가 레이아웃과 정보 계층으로 집중된다.
 - **Mobile-first, Tailwind v4 utilities만** (`@container` + `@md:` prefix로 반응형) — 프로젝트의 실제 구현 스택과 동일하므로 확정된 wireframe의 유틸리티를 거의 그대로 plan 단계로 옮길 수 있다.
 - Lucide 아이콘: `<i data-lucide="icon-name"></i>`

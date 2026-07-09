@@ -30,13 +30,13 @@ applied: not-yet
 
 ---
 category: spec-ambiguity
-applied: not-yet
+applied: rule
 ---
 ## wireframe이 spec에 없는 네비게이션(뒤로가기)을 슬쩍 추가했다
 
 **상황**: sketch-wireframe 단계에서 화면 간 이동을 자연스럽게 만들려고 "← 빵 종류" 뒤로가기 버튼을 넣었는데, spec.md의 시나리오 어디에도 이 전환은 없었다. draft-plan의 plan-reviewer가 이 wireframe↔spec 간극을 잡아냈다.
-**판단**: 사용자에게 확인 후 MVP 범위에서 제외하고 wireframe에서 버튼을 제거했다. "다시 진단"(Scenario 6)으로 재입력 흐름은 이미 커버되므로 별도 뒤로가기는 불필요한 범위 확장이었다.
-**다시 마주칠 가능성**: 높음 — 여러 화면을 넘나드는 wireframe을 그릴 때, 없는 이동 경로를 "당연히 있어야 할 것 같아서" 추가하는 경향이 있다. sketch-wireframe 스킬에 "화면 간 이동 컨트롤은 spec의 시나리오 전환에 대응하는 것만 그린다"는 원칙 추가를 사용자에게 제안했음 — 승인 여부 대기.
+**판단**: 사용자에게 확인 후 MVP 범위에서 제외하고 wireframe에서 버튼을 제거했다. "다시 진단"(Scenario 6)으로 재입력 흐름은 이미 커버되므로 별도 뒤로가기는 불필요한 범위 확장이었다. 사용자 승인을 받아 `.claude/skills/sketch-wireframe/SKILL.md` Principles에 "화면 간 이동 컨트롤은 spec의 시나리오 전환에 대응하는 것만 그린다" 원칙을 즉시 추가했다.
+**다시 마주칠 가능성**: 높음 — 여러 화면을 넘나드는 wireframe을 그릴 때, 없는 이동 경로를 "당연히 있어야 할 것 같아서" 추가하는 경향이 있다.
 
 ---
 category: spec-ambiguity
