@@ -54,4 +54,26 @@ describe("BreadDoctor", () => {
 
     expect(screen.getByText("과발효")).toBeInTheDocument();
   });
+
+  it("Scenario 6: 증상을 바꿔 다시 진단하면 이전 결과가 사라지고 새 1순위가 표시된다", async () => {
+    render(<BreadDoctor />);
+
+    await userEvent.click(screen.getByRole("button", { name: "식빵" }));
+    await userEvent.click(screen.getByLabelText("부풀다 주저앉음"));
+    await userEvent.click(screen.getByLabelText("기공이 너무 크고 불규칙"));
+    await userEvent.click(screen.getByLabelText("신맛 / 이상한 냄새"));
+    await userEvent.click(screen.getByRole("button", { name: /진단하기/ }));
+    expect(screen.getByText("과발효")).toBeInTheDocument();
+
+    await userEvent.click(screen.getByRole("button", { name: /다시 진단/ }));
+    await userEvent.click(screen.getByLabelText("부풀다 주저앉음"));
+    await userEvent.click(screen.getByLabelText("기공이 너무 크고 불규칙"));
+    await userEvent.click(screen.getByLabelText("신맛 / 이상한 냄새"));
+    await userEvent.click(screen.getByLabelText("겉은 탔는데 속은 덜 익음"));
+    await userEvent.click(screen.getByLabelText("겉이 두껍고 딱딱함"));
+    await userEvent.click(screen.getByRole("button", { name: /진단하기/ }));
+
+    expect(screen.queryByText("과발효")).not.toBeInTheDocument();
+    expect(screen.getByText("오븐 온도가 높음")).toBeInTheDocument();
+  });
 });
