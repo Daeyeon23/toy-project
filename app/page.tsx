@@ -1,5 +1,5 @@
-import { ComponentExample } from "@/components/component-example";
+import { BreadDoctor } from "@/components/bread-doctor/bread-doctor";
 
 export default function Page() {
-return <ComponentExample />;
+  return <BreadDoctor />;
 }

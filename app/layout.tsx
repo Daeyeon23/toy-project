@@ -7,8 +7,8 @@ import { cn } from "@/lib/utils";
 const oxanium = Oxanium({subsets:['latin'],variable:'--font-sans'});
 
 export const metadata: Metadata = {
-  title: "Kanban Todo",
-  description: "Kanban board application",
+  title: "브레드 닥터",
+  description: "증상으로 식빵 실패 원인을 진단하는 도구",
 };
 
 export default function RootLayout({
