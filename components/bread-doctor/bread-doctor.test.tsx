@@ -66,9 +66,9 @@ describe("BreadDoctor", () => {
     expect(screen.getByText("과발효")).toBeInTheDocument();
 
     await userEvent.click(screen.getByRole("button", { name: /다시 진단/ }));
-    await userEvent.click(screen.getByLabelText("부풀다 주저앉음"));
-    await userEvent.click(screen.getByLabelText("기공이 너무 크고 불규칙"));
-    await userEvent.click(screen.getByLabelText("신맛 / 이상한 냄새"));
+
+    // restart 이후 이전 선택은 초기화된다 — 재클릭(해제)이 아니라 새 증상만 선택한다.
+    expect(screen.getByLabelText("부풀다 주저앉음")).not.toBeChecked();
     await userEvent.click(screen.getByLabelText("겉은 탔는데 속은 덜 익음"));
     await userEvent.click(screen.getByLabelText("겉이 두껍고 딱딱함"));
     await userEvent.click(screen.getByRole("button", { name: /진단하기/ }));

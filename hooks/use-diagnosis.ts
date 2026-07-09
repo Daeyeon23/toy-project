@@ -58,6 +58,7 @@ export function useDiagnosis(): UseDiagnosisResult {
   );
 
   const restart = useCallback(() => {
+    setSelectedSymptomIds([]);
     setOutcome(null);
     setQuestionsAskedCount(0);
     setStep("symptoms");

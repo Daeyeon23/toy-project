@@ -45,7 +45,7 @@ export function rankCauses(
 
   return causes
     .map((cause) => ({ cause, score: scoreByCauseId.get(cause.id) ?? 0 }))
-    .filter((ranked) => ranked.score > 0)
+    .filter((rc) => rc.score > 0)
     .sort((a, b) => b.score - a.score || a.cause.id.localeCompare(b.cause.id));
 }
 
@@ -88,7 +88,7 @@ function buildResult(ranked: RankedCause[]): DiagnosisOutcome {
   const maxScore = ranked[0]?.score ?? 0;
   return {
     kind: "result",
-    causes: top.map((ranked) => toCauseResult(ranked, maxScore)),
+    causes: top.map((rc) => toCauseResult(rc, maxScore)),
   };
 }
 
@@ -112,9 +112,7 @@ export function diagnose(
       return {
         kind: "question",
         question,
-        candidates: proximatePair.map((ranked) =>
-          toCauseResult(ranked, maxScore),
-        ),
+        candidates: proximatePair.map((rc) => toCauseResult(rc, maxScore)),
       };
     }
   }

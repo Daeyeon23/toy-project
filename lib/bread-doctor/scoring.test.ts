@@ -69,6 +69,11 @@ describe("diagnose", () => {
       expect(["high", "medium"]).toContain(result.strength);
     }
   });
+
+  it("어떤 원인과도 연관 없는 증상만 있으면 빈 결과를 반환한다", () => {
+    const outcome = diagnose(["no-such-symptom"]);
+    expect(outcome).toEqual({ kind: "result", causes: [] });
+  });
 });
 
 describe("answerQuestion", () => {
