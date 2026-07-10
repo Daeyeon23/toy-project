@@ -93,9 +93,9 @@ None — 정적 진단 지식 기반, 외부 자원·네트워크 없음.
   - `lib/bread-doctor/knowledge/_core.ts` — CORE 9원인·10증상 정본 id·라벨 + 25종에서 등장하는 전체 코드의 `id → label` 레지스트리
   - `lib/bread-doctor/knowledge/_core.test.ts`
 - **수용 기준**:
-  - [ ] 25개 매트릭스에 등장하는 모든 원인·증상 id를 수집했을 때, **한 id가 서로 다른 의미(라벨)로 두 번 정의되지 않는다** (충돌 0건)
-  - [ ] 배치-간 공유 코드(`flat-griddle-too-hot`/`flat-griddle-too-cool`·`flat-uneven-thickness`)가 공유 빵들에서 동일 의미로 매핑된다
-  - [ ] CORE 9원인·10증상 id가 v1 `knowledge-base.ts`의 id와 정확히 일치한다 (식빵 회귀 전제)
+  - [x] 25개 매트릭스에 등장하는 모든 원인·증상 id를 수집했을 때, **한 id가 서로 다른 의미(라벨)로 두 번 정의되지 않는다** (충돌 0건)
+  - [x] 배치-간 공유 코드(`flat-griddle-too-hot`/`flat-griddle-too-cool`·`flat-uneven-thickness`)가 공유 빵들에서 동일 의미로 매핑된다
+  - [x] CORE 9원인·10증상 id가 v1 `knowledge-base.ts`의 id와 정확히 일치한다 (식빵 회귀 전제)
 - **검증**: `bun run test -- _core`
 - **비고(리뷰 반영)**: 레지스트리는 매트릭스 md에서 손으로 전사하므로, 테스트는 레지스트리 내부 자기정합성만 검증하고 전사 오류는 자동으로 못 잡는다. Task 4–9에서 각 빵 TS 파일이 이 레지스트리 id를 재사용하도록 강제해 사후 교차검증한다.
 
@@ -115,19 +115,19 @@ None — 정적 진단 지식 기반, 외부 자원·네트워크 없음.
   - **소비자 마이그레이션(원자성 확보)**: `hooks/use-diagnosis.ts`·`components/bread-doctor/symptom-checklist.tsx`가 새 모듈 형태에 맞게 컴파일되도록 배선(동작은 여전히 식빵 고정 — `getBreadKnowledge("white-loaf")` 조회). 이렇게 해야 이 Task의 build/test 체크포인트가 그 자체로 통과 가능
   - 테스트 갱신: `knowledge-base.test.ts`(빵별 정합성), `scoring.test.ts`·`search.test.ts`(식빵 KB 명시 주입, 기대값 불변)
 - **수용 기준**:
-  - [ ] `getBreadKnowledge("white-loaf")`의 증상·원인·매트릭스가 v1과 동일하다
-  - [ ] 기존 `scoring.test.ts`의 조합 A/B/C 기대 1순위(발효 부족·과발효·오븐 고온)가 식빵 KB 주입으로 그대로 통과한다
-  - [ ] 모든 빵의 `associations`가 해당 빵의 원인·증상 id만 참조한다 (교차 참조 0건)
-  - [ ] 소비자 3파일이 새 모듈 형태로 컴파일되고 식빵 UI 동작이 v1과 동일하다 (`bread-doctor.test.tsx`·`symptom-checklist.test.tsx` 기존 케이스 green)
-  - [ ] `bun run build` 성공 (import 깨짐 없음)
+  - [x] `getBreadKnowledge("white-loaf")`의 증상·원인·매트릭스가 v1과 동일하다
+  - [x] 기존 `scoring.test.ts`의 조합 A/B/C 기대 1순위(발효 부족·과발효·오븐 고온)가 식빵 KB 주입으로 그대로 통과한다
+  - [x] 모든 빵의 `associations`가 해당 빵의 원인·증상 id만 참조한다 (교차 참조 0건)
+  - [x] 소비자 3파일이 새 모듈 형태로 컴파일되고 식빵 UI 동작이 v1과 동일하다 (`bread-doctor.test.tsx`·`symptom-checklist.test.tsx` 기존 케이스 green)
+  - [x] `bun run build` 성공 (import 깨짐 없음)
 - **검증**: `bun run test` (전체 — 회귀 가드) · `bun run build`
 
 ---
 
 ### Checkpoint: Tasks 1-2 이후
-- [ ] 모든 테스트 통과: `bun run test`
-- [ ] 빌드 성공: `bun run build`
-- [ ] 식빵 경로가 v1과 완전히 동일하게 동작한다 (회귀 가드 green)
+- [x] 모든 테스트 통과: `bun run test`
+- [x] 빌드 성공: `bun run build`
+- [x] 식빵 경로가 v1과 완전히 동일하게 동작한다 (회귀 가드 green)
 
 ---
 
@@ -146,22 +146,22 @@ None — 정적 진단 지식 기반, 외부 자원·네트워크 없음.
   - `components/bread-doctor/symptom-checklist.tsx` — `synonyms` prop 받아 `filterSymptoms(query, symptoms, synonyms)`로 주입
   - `hooks/use-diagnosis.test.ts`(신규), `bread-doctor.test.tsx`(**범위 고지 단언을 리터럴 "기본 이스트 식빵 기준" → 선택 빵 동적 문구로 갱신**, `test.tsx:30`), `symptom-checklist.test.tsx`(동의어 주입)
 - **수용 기준**:
-  - [ ] 훅에 `selectBread("sourdough")` → 노출 `symptoms`가 사워도우 증상이고 식빵 전용 증상이 없다
-  - [ ] `selectBread("white-loaf")` → `symptoms`가 식빵 세트다 (사워도우 증상 미포함)
-  - [ ] 사워도우로 진단 → 결과 원인이 사워도우 원인 세트에서만 나온다 (식빵 원인 미혼입)
-  - [ ] 진단·결과 화면 범위 고지가 "사워도우 기준"으로 표시된다 (불변: 범위 고지)
-  - [ ] **증상 선택 화면(진단하기 전)**에서 "빵 다시 고르기" → 피커 스텝으로 돌아가고, 선택했던 증상이 남지 않는다 (초기화)
-  - [ ] **결과 화면**에서 "빵 다시 고르기" → 피커 스텝으로 돌아가고, 다른 빵 선택 시 이전 증상 선택·결과가 남지 않는다 (초기화)
-  - [ ] 사워도우 동의어로 증상 검색이 동작한다 (식빵 동의어가 아니라 사워도우 사전)
+  - [x] 훅에 `selectBread("sourdough")` → 노출 `symptoms`가 사워도우 증상이고 식빵 전용 증상이 없다
+  - [x] `selectBread("white-loaf")` → `symptoms`가 식빵 세트다 (사워도우 증상 미포함)
+  - [x] 사워도우로 진단 → 결과 원인이 사워도우 원인 세트에서만 나온다 (식빵 원인 미혼입)
+  - [x] 진단·결과 화면 범위 고지가 "사워도우 기준"으로 표시된다 (불변: 범위 고지)
+  - [x] **증상 선택 화면(진단하기 전)**에서 "빵 다시 고르기" → 피커 스텝으로 돌아가고, 선택했던 증상이 남지 않는다 (초기화)
+  - [x] **결과 화면**에서 "빵 다시 고르기" → 피커 스텝으로 돌아가고, 다른 빵 선택 시 이전 증상 선택·결과가 남지 않는다 (초기화)
+  - [x] 사워도우 동의어로 증상 검색이 동작한다 (식빵 동의어가 아니라 사워도우 사전)
 - **검증**: `bun run test -- "use-diagnosis|symptom-checklist|bread-doctor"`
 - **비고**: 이 시점 `config`는 아직 v1 4종(사워도우=coming-soon)이라 피커 UI로 사워도우를 클릭할 수 없다. 사워도우 선택은 훅/컨테이너 직접 호출로 검증하고, 피커를 통한 비-식빵 선택은 Task 10·11에서 검증한다.
 
 ---
 
 ### Checkpoint: Task 3 이후
-- [ ] 모든 테스트 통과: `bun run test`
-- [ ] 빌드 성공: `bun run build`
-- [ ] 식빵·사워도우 2종으로 "빵마다 다른 증상·원인 세트 + 동적 범위 고지 + 빵 다시 고르기"가 동작
+- [x] 모든 테스트 통과: `bun run test`
+- [x] 빌드 성공: `bun run build`
+- [x] 식빵·사워도우 2종으로 "빵마다 다른 증상·원인 세트 + 동적 범위 고지 + 빵 다시 고르기"가 동작
 
 ---
 
@@ -175,9 +175,9 @@ None — 정적 진단 지식 기반, 외부 자원·네트워크 없음.
 - **참조**: matrices/baguette.md · ciabatta.md · focaccia.md · pain-de-campagne.md
 - **구현 대상**: `knowledge/{baguette,ciabatta,focaccia,pain-de-campagne}.ts` (+ 인덱스), `knowledge/lean-doughs.test.ts`
 - **수용 기준**:
-  - [ ] 각 빵의 매트릭스 "결론" 대표 PEAKED 조합 → 기대 1순위 원인이 `diagnose`로 재현된다 (빵당 최소 1건)
-  - [ ] 4종 각각 `associations`가 자기 빵 원인·증상만 참조한다 (Task 2 정합성 검사 통과)
-  - [ ] 4종의 모든 코드 id가 Task 1 레지스트리에 존재한다 (전사 교차검증)
+  - [x] 각 빵의 매트릭스 "결론" 대표 PEAKED 조합 → 기대 1순위 원인이 `diagnose`로 재현된다 (빵당 최소 1건)
+  - [x] 4종 각각 `associations`가 자기 빵 원인·증상만 참조한다 (Task 2 정합성 검사 통과)
+  - [x] 4종의 모든 코드 id가 Task 1 레지스트리에 존재한다 (전사 교차검증)
 - **검증**: `bun run test -- lean-doughs`
 
 ### Task 5: 데이터 — 호밀 + 라미네이션 4종 (rye-bread·pumpernickel·croissant·danish-pastry)
@@ -188,9 +188,9 @@ None — 정적 진단 지식 기반, 외부 자원·네트워크 없음.
 - **참조**: matrices/rye-bread.md · pumpernickel.md · croissant.md · danish-pastry.md
 - **구현 대상**: `knowledge/{rye-bread,pumpernickel,croissant,danish-pastry}.ts` (+ 인덱스), `knowledge/rye-laminated.test.ts`
 - **수용 기준**:
-  - [ ] 각 빵 대표 PEAKED 조합 → 기대 1순위 원인 재현 (예: 크루아상 leak+flat+greasy → 버터 녹음)
-  - [ ] **크루아상 KB의 증상 세트에 `lam-*`가 포함되고 식빵 전용 증상은 없다** (Scenario 0-A 정확 예시)
-  - [ ] `lam-`·`starter-`·`rye-` 신규 코드가 Task 1 레지스트리와 일치한다
+  - [x] 각 빵 대표 PEAKED 조합 → 기대 1순위 원인 재현 (예: 크루아상 leak+flat+greasy → 버터 녹음)
+  - [x] **크루아상 KB의 증상 세트에 `lam-*`가 포함되고 식빵 전용 증상은 없다** (Scenario 0-A 정확 예시)
+  - [x] `lam-`·`starter-`·`rye-` 신규 코드가 Task 1 레지스트리와 일치한다
 - **검증**: `bun run test -- rye-laminated`
 
 ### Task 6: 데이터 — enriched 4종 (brioche·panettone·milk-bread·anpan)
@@ -201,16 +201,16 @@ None — 정적 진단 지식 기반, 외부 자원·네트워크 없음.
 - **참조**: matrices/brioche.md · panettone.md · milk-bread.md · anpan.md
 - **구현 대상**: `knowledge/{brioche,panettone,milk-bread,anpan}.ts` (+ 인덱스), `knowledge/enriched.test.ts`
 - **수용 기준**:
-  - [ ] 각 빵 대표 PEAKED 조합 → 기대 1순위 원인 재현 (예: 단팥빵 충전물 조합 → filling-leak)
-  - [ ] `enr-` 신규 코드가 4종에 걸쳐 동일 의미로 재사용된다 (레지스트리 일치)
+  - [x] 각 빵 대표 PEAKED 조합 → 기대 1순위 원인 재현 (예: 단팥빵 충전물 조합 → filling-leak)
+  - [x] `enr-` 신규 코드가 4종에 걸쳐 동일 의미로 재사용된다 (레지스트리 일치)
 - **검증**: `bun run test -- enriched`
 
 ---
 
 ### Checkpoint: Tasks 4-6 이후
-- [ ] 모든 테스트 통과: `bun run test`
-- [ ] 빌드 성공: `bun run build`
-- [ ] KB에 12종(식빵+사워도우+린도우4+호밀·라미4+enriched... 부분) 등록·진단 가능
+- [x] 모든 테스트 통과: `bun run test`
+- [x] 빌드 성공: `bun run build`
+- [x] KB에 12종(식빵+사워도우+린도우4+호밀·라미4+enriched... 부분) 등록·진단 가능
 
 ---
 
@@ -222,8 +222,8 @@ None — 정적 진단 지식 기반, 외부 자원·네트워크 없음.
 - **참조**: matrices/scone.md · soda-bread.md · cornbread.md · bagel.md · pretzel.md
 - **구현 대상**: `knowledge/{scone,soda-bread,cornbread,bagel,pretzel}.ts` (+ 인덱스), `knowledge/chemical-boiled.test.ts`
 - **수용 기준**:
-  - [ ] 각 빵 대표 PEAKED 조합 → 기대 1순위 원인 재현 (예: 베이글 boil-tough-wrinkled+gummy → over-boiled)
-  - [ ] `quick-`(발효 무관)·`boil-` 신규 코드가 레지스트리와 일치한다
+  - [x] 각 빵 대표 PEAKED 조합 → 기대 1순위 원인 재현 (예: 베이글 boil-tough-wrinkled+gummy → over-boiled)
+  - [x] `quick-`(발효 무관)·`boil-` 신규 코드가 레지스트리와 일치한다
 - **검증**: `bun run test -- chemical-boiled`
 
 ### Task 8: 데이터 — 발효 플랫브레드 4종 (pizza-dough·naan·pita·english-muffin)
@@ -234,8 +234,8 @@ None — 정적 진단 지식 기반, 외부 자원·네트워크 없음.
 - **참조**: matrices/pizza-dough.md · naan.md · pita.md · english-muffin.md
 - **구현 대상**: `knowledge/{pizza-dough,naan,pita,english-muffin}.ts` (+ 인덱스), `knowledge/leavened-flat.test.ts`
 - **수용 기준**:
-  - [ ] 각 빵 대표 PEAKED 조합 → 기대 1순위 원인 재현
-  - [ ] 난↔잉글리시머핀 공유 그리들 코드(`flat-griddle-too-*`)가 두 빵에서 동일 의미로 동작한다
+  - [x] 각 빵 대표 PEAKED 조합 → 기대 1순위 원인 재현
+  - [x] 난↔잉글리시머핀 공유 그리들 코드(`flat-griddle-too-*`)가 두 빵에서 동일 의미로 동작한다
 - **검증**: `bun run test -- leavened-flat`
 
 ### Task 9: 데이터 — 무발효 플랫브레드 2종 (tortilla·lavash)
@@ -246,16 +246,16 @@ None — 정적 진단 지식 기반, 외부 자원·네트워크 없음.
 - **참조**: matrices/tortilla.md · lavash.md
 - **구현 대상**: `knowledge/{tortilla,lavash}.ts` (+ 인덱스), `knowledge/unleavened-flat.test.ts`
 - **수용 기준**:
-  - [ ] 각 빵 대표 PEAKED 조합 → 기대 1순위 원인 재현
-  - [ ] 발효 CORE 코드(yeast/underproof/overproof)가 두 빵 KB에 포함되지 않는다 (무발효 도메인 반영)
+  - [x] 각 빵 대표 PEAKED 조합 → 기대 1순위 원인 재현
+  - [x] 발효 CORE 코드(yeast/underproof/overproof)가 두 빵 KB에 포함되지 않는다 (무발효 도메인 반영)
 - **검증**: `bun run test -- unleavened-flat`
 
 ---
 
 ### Checkpoint: Tasks 7-9 이후
-- [ ] 모든 테스트 통과: `bun run test`
-- [ ] `BREAD_KNOWLEDGE`에 25종 전부 등록됨
-- [ ] `knowledge-base.test.ts` 빵별 정합성 검사가 25종 모두 통과
+- [x] 모든 테스트 통과: `bun run test`
+- [x] `BREAD_KNOWLEDGE`에 25종 전부 등록됨
+- [x] `knowledge-base.test.ts` 빵별 정합성 검사가 25종 모두 통과
 
 ---
 
@@ -275,12 +275,12 @@ None — 정적 진단 지식 기반, 외부 자원·네트워크 없음.
   - `components/bread-doctor/bread-type-picker.test.tsx`
   - `components/bread-doctor/bread-doctor.test.tsx` — **사워도우 "준비 중 비활성" 테스트(`test.tsx:17-25`)를 제거/재작성**(이제 선택 가능)
 - **수용 기준**:
-  - [ ] 피커에 25개 빵 카드가 카테고리 그룹(예: "사워도우·호밀") 헤더 아래 묶여 표시된다
-  - [ ] "준비 중"/비활성 카드가 없다 (모든 카드 선택 가능)
-  - [ ] 진입 시 어떤 빵도 선택되지 않았고, 빵을 고르기 전에는 증상 화면으로 갈 수 없다 (Scenario 0 초기 상태)
-  - [ ] "치아" 입력 → "치아바타" 카드만 남고 무관한 빵은 사라진다
-  - [ ] 매칭 없는 검색어 → "일치하는 빵 없음" 안내 표시, 검색어 지우면 25종 복원
-  - [ ] 임의 빵 카드 클릭 → 그 빵의 증상 체크리스트로 이동한다
+  - [x] 피커에 25개 빵 카드가 카테고리 그룹(예: "사워도우·호밀") 헤더 아래 묶여 표시된다
+  - [x] "준비 중"/비활성 카드가 없다 (모든 카드 선택 가능)
+  - [x] 진입 시 어떤 빵도 선택되지 않았고, 빵을 고르기 전에는 증상 화면으로 갈 수 없다 (Scenario 0 초기 상태)
+  - [x] "치아" 입력 → "치아바타" 카드만 남고 무관한 빵은 사라진다
+  - [x] 매칭 없는 검색어 → "일치하는 빵 없음" 안내 표시, 검색어 지우면 25종 복원
+  - [x] 임의 빵 카드 클릭 → 그 빵의 증상 체크리스트로 이동한다
 - **검증**: `bun run test -- "bread-type-picker|bread-doctor"` · `bun run build`
 
 ### Task 11: 불변 규칙 + 비-식빵 전체 흐름 E2E
@@ -292,21 +292,21 @@ None — 정적 진단 지식 기반, 외부 자원·네트워크 없음.
 - **구현 대상**:
   - `e2e/bread-doctor.spec.ts` — **범위 고지 리터럴 단언(`spec.ts:30` "기본 이스트 식빵 기준")을 선택 빵 동적 문구로 갱신** + 비-식빵 시나리오 추가
 - **수용 기준**:
-  - [ ] `/` → 카테고리에서 비-식빵(예: 크루아상) 선택 → 그 빵 증상 → 진단 → 결과 1순위 카드가 뜬다
-  - [ ] 결과·진단 화면에 "크루아상 기준" 범위 고지와 면책 고지가 보인다 (불변: 범위·면책)
-  - [ ] 결과 카드에 크루아상 원인만 있고 다른 빵 원인 문구가 없다 (불변: 빵 경계 격리)
-  - [ ] 전체 흐름 어느 화면에도 원시 점수·퍼센트 숫자가 없다 (불변: 점수 비노출)
-  - [ ] 진단 과정에서 외부 호스트 네트워크 요청 0건 (불변: 클라이언트 완결)
-  - [ ] 기존 식빵 E2E 흐름(리터럴 갱신 후)이 그대로 통과한다 (불변: 식빵 회귀)
+  - [x] `/` → 카테고리에서 비-식빵(예: 크루아상) 선택 → 그 빵 증상 → 진단 → 결과 1순위 카드가 뜬다
+  - [x] 결과·진단 화면에 "크루아상 기준" 범위 고지와 면책 고지가 보인다 (불변: 범위·면책)
+  - [x] 결과 카드에 크루아상 원인만 있고 다른 빵 원인 문구가 없다 (불변: 빵 경계 격리)
+  - [x] 전체 흐름 어느 화면에도 원시 점수·퍼센트 숫자가 없다 (불변: 점수 비노출)
+  - [x] 진단 과정에서 외부 호스트 네트워크 요청 0건 (불변: 클라이언트 완결)
+  - [x] 기존 식빵 E2E 흐름(리터럴 갱신 후)이 그대로 통과한다 (불변: 식빵 회귀)
 - **검증**: `bun run test:e2e -- bread-doctor` · 증거 `artifacts/bread-doctor/evidence/task-11.png`
 
 ---
 
 ### Checkpoint: 최종
-- [ ] 모든 테스트 통과: `bun run test`
-- [ ] E2E 통과: `bun run test:e2e`
-- [ ] 빌드 성공: `bun run build`
-- [ ] spec 시나리오 0·0-A·0-B·0-C + 1~7(식빵 회귀) + 불변 규칙 6개가 모두 검증됨
+- [x] 모든 테스트 통과: `bun run test`
+- [x] E2E 통과: `bun run test:e2e`
+- [x] 빌드 성공: `bun run build`
+- [x] spec 시나리오 0·0-A·0-B·0-C + 1~7(식빵 회귀) + 불변 규칙 6개가 모두 검증됨
 
 ---
 
