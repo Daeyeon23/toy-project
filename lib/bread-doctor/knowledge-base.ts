@@ -8,6 +8,10 @@ import { RYE_BREAD } from "@/lib/bread-doctor/knowledge/rye-bread";
 import { PUMPERNICKEL } from "@/lib/bread-doctor/knowledge/pumpernickel";
 import { CROISSANT } from "@/lib/bread-doctor/knowledge/croissant";
 import { DANISH_PASTRY } from "@/lib/bread-doctor/knowledge/danish-pastry";
+import { BRIOCHE } from "@/lib/bread-doctor/knowledge/brioche";
+import { PANETTONE } from "@/lib/bread-doctor/knowledge/panettone";
+import { MILK_BREAD } from "@/lib/bread-doctor/knowledge/milk-bread";
+import { ANPAN } from "@/lib/bread-doctor/knowledge/anpan";
 import type { BreadKnowledge } from "@/types/bread-doctor";
 
 /**
@@ -25,6 +29,10 @@ export const BREAD_KNOWLEDGE: Record<string, BreadKnowledge> = {
   pumpernickel: PUMPERNICKEL,
   croissant: CROISSANT,
   "danish-pastry": DANISH_PASTRY,
+  brioche: BRIOCHE,
+  panettone: PANETTONE,
+  "milk-bread": MILK_BREAD,
+  anpan: ANPAN,
 };
 
 /** 등록되지 않은 빵 id는 프로그래밍 오류(설정 누락)이므로 즉시 던진다. */
