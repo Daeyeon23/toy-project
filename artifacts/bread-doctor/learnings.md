@@ -20,7 +20,7 @@ applied: discarded
 
 ---
 category: task-ordering
-applied: not-yet
+applied: rule
 ---
 ## KB 데이터(연관 매트릭스·판별 질문·동의어)를 한 파일에서 한 번에 저술
 
@@ -40,7 +40,7 @@ applied: rule
 
 ---
 category: spec-ambiguity
-applied: not-yet
+applied: rule
 ---
 ## "다시 진단" 시 이전 증상 선택 유지 vs 초기화
 
@@ -60,7 +60,7 @@ applied: discarded
 
 ---
 category: task-ordering
-applied: not-yet
+applied: rule
 ---
 ## Task 1의 "정본 레지스트리"를 손으로 전사하지 않고 실제 KB에서 파생시킴
 
@@ -70,7 +70,7 @@ applied: not-yet
 
 ---
 category: spec-ambiguity
-applied: not-yet
+applied: rule
 ---
 ## taxonomy 작성 시 실제 코드의 원인 id("c1".."c9")를 확인하지 않고 시맨틱 id를 지정함
 
@@ -100,7 +100,7 @@ applied: rule
 
 ---
 category: spec-ambiguity
-applied: not-yet
+applied: rule
 ---
 ## spec의 "치아→치아바타" 검색 예시가 25종 실 데이터에서는 거짓이었다 (포카치아도 "치아"를 포함)
 
