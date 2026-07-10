@@ -17,6 +17,10 @@ import { SODA_BREAD } from "@/lib/bread-doctor/knowledge/soda-bread";
 import { CORNBREAD } from "@/lib/bread-doctor/knowledge/cornbread";
 import { BAGEL } from "@/lib/bread-doctor/knowledge/bagel";
 import { PRETZEL } from "@/lib/bread-doctor/knowledge/pretzel";
+import { PIZZA_DOUGH } from "@/lib/bread-doctor/knowledge/pizza-dough";
+import { NAAN } from "@/lib/bread-doctor/knowledge/naan";
+import { PITA } from "@/lib/bread-doctor/knowledge/pita";
+import { ENGLISH_MUFFIN } from "@/lib/bread-doctor/knowledge/english-muffin";
 import type { BreadKnowledge } from "@/types/bread-doctor";
 
 /**
@@ -43,6 +47,10 @@ export const BREAD_KNOWLEDGE: Record<string, BreadKnowledge> = {
   cornbread: CORNBREAD,
   bagel: BAGEL,
   pretzel: PRETZEL,
+  "pizza-dough": PIZZA_DOUGH,
+  naan: NAAN,
+  pita: PITA,
+  "english-muffin": ENGLISH_MUFFIN,
 };
 
 /** 등록되지 않은 빵 id는 프로그래밍 오류(설정 누락)이므로 즉시 던진다. */
