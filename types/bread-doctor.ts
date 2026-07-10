@@ -4,6 +4,14 @@ export interface BreadType {
   id: string;
   name: string;
   status: BreadTypeStatus;
+  category: string;
+}
+
+/** 빵 선택 화면의 카테고리 섹션 — 순서·라벨. */
+export interface BreadCategory {
+  id: string;
+  label: string;
+  order: number;
 }
 
 export interface Symptom {

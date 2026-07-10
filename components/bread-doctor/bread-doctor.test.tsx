@@ -14,13 +14,17 @@ describe("BreadDoctor", () => {
     ).toBeInTheDocument();
   });
 
-  it("준비 중 카드를 클릭해도 증상 화면으로 전환되지 않는다", async () => {
+  it("Scenario 0-A: 크루아상 선택 → 라미네이션 증상이 표시되고 식빵 전용 증상은 안 보인다", async () => {
     render(<BreadDoctor />);
 
-    await userEvent.click(screen.getByRole("button", { name: /사워도우/ }));
+    await userEvent.click(screen.getByRole("button", { name: "크루아상" }));
 
+    expect(screen.getByText("크루아상 기준")).toBeInTheDocument();
     expect(
-      screen.queryByRole("heading", { name: "증상을 선택해 주세요" }),
+      screen.getByLabelText(/단면이 조밀하고 층이 잘 안 보임/),
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByLabelText("옆구리·표면이 터짐"),
     ).not.toBeInTheDocument();
   });
 

@@ -2,24 +2,28 @@ import { describe, expect, it, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { BreadTypePicker } from "@/components/bread-doctor/bread-type-picker";
-import type { BreadType } from "@/types/bread-doctor";
-
-const BREAD_TYPES: BreadType[] = [
-  { id: "white-loaf", name: "식빵", status: "available" },
-  { id: "sourdough", name: "사워도우", status: "coming-soon" },
-  { id: "croissant", name: "크루아상", status: "coming-soon" },
-  { id: "scone", name: "스콘", status: "coming-soon" },
-];
+import { BREAD_TYPES } from "@/config/bread-doctor";
 
 describe("BreadTypePicker", () => {
-  it("식빵 카드와 준비 중 배지가 붙은 카드들을 함께 표시한다", () => {
+  it("25개 빵 카드가 카테고리 그룹 헤더 아래 묶여 표시된다", () => {
     render(<BreadTypePicker breadTypes={BREAD_TYPES} onSelect={vi.fn()} />);
 
-    expect(screen.getByRole("button", { name: "식빵" })).toBeInTheDocument();
-    expect(screen.getAllByText("준비 중")).toHaveLength(3);
+    expect(screen.getAllByRole("button").length).toBe(BREAD_TYPES.length);
+    expect(screen.getByText("사워도우 · 호밀")).toBeInTheDocument();
+    expect(screen.getByText("라미네이션")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "치아바타" })).toBeInTheDocument();
   });
 
-  it("식빵 카드를 클릭하면 onSelect가 해당 id로 호출된다", async () => {
+  it("모든 카드가 선택 가능하다 (준비 중/비활성 카드가 없다)", () => {
+    render(<BreadTypePicker breadTypes={BREAD_TYPES} onSelect={vi.fn()} />);
+
+    expect(screen.queryByText("준비 중")).not.toBeInTheDocument();
+    for (const button of screen.getAllByRole("button")) {
+      expect(button).toBeEnabled();
+    }
+  });
+
+  it("빵 카드를 클릭하면 onSelect가 해당 id로 호출된다", async () => {
     const onSelect = vi.fn();
     render(<BreadTypePicker breadTypes={BREAD_TYPES} onSelect={onSelect} />);
 
@@ -28,15 +32,29 @@ describe("BreadTypePicker", () => {
     expect(onSelect).toHaveBeenCalledWith("white-loaf");
   });
 
-  it("준비 중 카드는 비활성이라 클릭해도 onSelect가 호출되지 않는다", async () => {
-    const onSelect = vi.fn();
-    render(<BreadTypePicker breadTypes={BREAD_TYPES} onSelect={onSelect} />);
+  it("치아 입력 → 치아바타 카드만 남고 무관한 빵은 사라진다", async () => {
+    render(<BreadTypePicker breadTypes={BREAD_TYPES} onSelect={vi.fn()} />);
 
-    const sourdoughButton = screen.getByRole("button", { name: /사워도우/ });
-    expect(sourdoughButton).toBeDisabled();
+    await userEvent.type(
+      screen.getByPlaceholderText("빵 이름으로 검색 (예: 치아바타)"),
+      "치아",
+    );
 
-    await userEvent.click(sourdoughButton);
+    expect(screen.getByRole("button", { name: "치아바타" })).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "식빵" })).not.toBeInTheDocument();
+    expect(screen.getAllByRole("button")).toHaveLength(1);
+  });
 
-    expect(onSelect).not.toHaveBeenCalled();
+  it("매칭되는 빵이 없는 검색어 → 안내가 표시되고, 지우면 25종 전체가 복원된다", async () => {
+    render(<BreadTypePicker breadTypes={BREAD_TYPES} onSelect={vi.fn()} />);
+
+    const searchInput = screen.getByPlaceholderText("빵 이름으로 검색 (예: 치아바타)");
+    await userEvent.type(searchInput, "우주선");
+
+    expect(screen.getByText("일치하는 빵이 없어요")).toBeInTheDocument();
+
+    await userEvent.clear(searchInput);
+
+    expect(screen.getAllByRole("button")).toHaveLength(BREAD_TYPES.length);
   });
 });
