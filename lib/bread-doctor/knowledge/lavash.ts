@@ -56,8 +56,8 @@ const CAUSES: Cause[] = [
     action: "물 양을 줄이거나 덧가루로 반죽 농도를 조절하세요.",
   },
   {
-    id: "flat-uneven-thickness",
-    name: "두께 불균일/과다",
+    id: "flat-uneven-rolling",
+    name: "손/밀대로 두께 불균일하게 성형",
     why: "13×9인치 정도의 큰 타원으로 고르게 늘리지 못하면 두꺼운 부분은 안 익고 얇은 부분은 타거나 뚫립니다.",
     action: "가운데보다 가장자리를 살짝 더 두껍게 남기며 최대한 고르고 얇게 늘리세요.",
   },
@@ -96,9 +96,9 @@ const ASSOCIATIONS: Association[] = [
   { causeId: "excess-hydration", symptomId: "too-wet", weight: 2 },
   { causeId: "excess-hydration", symptomId: "flat-doughy-thick", weight: 1 },
 
-  { causeId: "flat-uneven-thickness", symptomId: "flat-no-bubbles", weight: 1 },
-  { causeId: "flat-uneven-thickness", symptomId: "flat-doughy-thick", weight: 2 },
-  { causeId: "flat-uneven-thickness", symptomId: "burnt-outside-raw-inside", weight: 2 },
+  { causeId: "flat-uneven-rolling", symptomId: "flat-no-bubbles", weight: 1 },
+  { causeId: "flat-uneven-rolling", symptomId: "flat-doughy-thick", weight: 2 },
+  { causeId: "flat-uneven-rolling", symptomId: "burnt-outside-raw-inside", weight: 2 },
 
   { causeId: "oven-too-hot", symptomId: "flat-dry-brittle", weight: 1 },
   { causeId: "oven-too-hot", symptomId: "burnt-outside-raw-inside", weight: 2 },
@@ -122,9 +122,9 @@ const DISCRIMINATOR_QUESTIONS: DiscriminatorQuestion[] = [
   },
   {
     id: "q-thickness-check",
-    pair: ["flat-uneven-thickness", "flat-underrest"],
+    pair: ["flat-uneven-rolling", "flat-underrest"],
     text: "반죽 두께가 부위별로 심하게 다른가요(가운데만 두껍거나 얇음)?",
-    yesFavors: "flat-uneven-thickness",
+    yesFavors: "flat-uneven-rolling",
     noFavors: "flat-underrest",
   },
 ];

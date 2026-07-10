@@ -24,7 +24,6 @@ const SYMPTOMS: Symptom[] = [
   { id: "pale", label: coreSymptomLabel("pale") },
   { id: "too-wet", label: coreSymptomLabel("too-wet") },
   { id: "burnt-outside-raw-inside", label: coreSymptomLabel("burnt-outside-raw-inside") },
-  { id: "sour-smell", label: coreSymptomLabel("sour-smell") },
   { id: "boil-thin-crust", label: "크러스트가 얇고 안 쫄깃함" },
   { id: "boil-tough-wrinkled", label: "겉이 가죽처럼 질기고 표면이 주름짐" },
   { id: "boil-no-shine", label: "표면에 광택 없음 / 색이 칙칙함" },
@@ -117,7 +116,6 @@ const ASSOCIATIONS: Association[] = [
   { causeId: "boil-overboiled", symptomId: "boil-tough-wrinkled", weight: 2 },
 
   { causeId: "boil-lye-issue", symptomId: "pale", weight: 1 },
-  { causeId: "boil-lye-issue", symptomId: "sour-smell", weight: 1 },
   { causeId: "boil-lye-issue", symptomId: "boil-no-shine", weight: 2 },
 ];
 
@@ -151,7 +149,6 @@ const SYNONYMS: SynonymEntry[] = [
   { symptomId: "gummy", terms: ["떡져요", "떡짐", "질어요", "속이 안 익음"] },
   { symptomId: "too-wet", terms: ["반죽이 너무 질어요", "손에 다 붙어요", "성형이 안 돼요"] },
   { symptomId: "burnt-outside-raw-inside", terms: ["겉만 익어요", "속이 안 익어요"] },
-  { symptomId: "sour-smell", terms: ["시어요", "냄새가 이상해요"] },
   {
     symptomId: "boil-thin-crust",
     terms: ["크러스트가 얇아요", "껍질이 안 쫄깃해요", "빵처럼 폭신해요"],

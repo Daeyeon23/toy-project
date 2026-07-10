@@ -23,7 +23,9 @@ export function BreadTypePicker({ breadTypes, onSelect }: BreadTypePickerProps) 
   const [query, setQuery] = useState("");
   const normalizedQuery = query.trim();
   const visibleBreadTypes = normalizedQuery
-    ? breadTypes.filter((breadType) => breadType.name.startsWith(normalizedQuery))
+    ? breadTypes.filter((breadType) =>
+        breadType.name.split(" ").some((token) => token.startsWith(normalizedQuery)),
+      )
     : breadTypes;
 
   const categories = BREAD_CATEGORIES.slice()

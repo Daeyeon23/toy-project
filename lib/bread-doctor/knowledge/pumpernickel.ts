@@ -100,6 +100,7 @@ const ASSOCIATIONS: Association[] = [
 
   { causeId: "underproof", symptomId: "no-rise", weight: 2 },
   { causeId: "underproof", symptomId: "gummy", weight: 2 },
+  { causeId: "underproof", symptomId: "blowout", weight: 1 },
 
   { causeId: "overproof", symptomId: "collapsed", weight: 2 },
   { causeId: "overproof", symptomId: "sour-smell", weight: 1 },
@@ -107,7 +108,6 @@ const ASSOCIATIONS: Association[] = [
 
   { causeId: "oven-too-cool", symptomId: "gummy", weight: 2 },
   { causeId: "oven-too-cool", symptomId: "dense-heavy-crumb", weight: 1 },
-  { causeId: "oven-too-cool", symptomId: "too-wet", weight: 1 },
 
   { causeId: "pumpernickel-crust-crack", symptomId: "thick-crust", weight: 1 },
   { causeId: "pumpernickel-crust-crack", symptomId: "crust-alligator-cracking", weight: 2 },

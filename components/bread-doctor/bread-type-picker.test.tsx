@@ -45,6 +45,18 @@ describe("BreadTypePicker", () => {
     expect(screen.getAllByRole("button")).toHaveLength(1);
   });
 
+  it("머핀 입력 → 단어 단위 접두 매칭으로 잉글리시 머핀이 검색된다 (포함검색은 치아→포카치아 오탐을 유발하므로 미사용)", async () => {
+    render(<BreadTypePicker breadTypes={BREAD_TYPES} onSelect={vi.fn()} />);
+
+    await userEvent.type(
+      screen.getByPlaceholderText("빵 이름으로 검색 (예: 치아바타)"),
+      "머핀",
+    );
+
+    expect(screen.getByRole("button", { name: "잉글리시 머핀" })).toBeInTheDocument();
+    expect(screen.getAllByRole("button")).toHaveLength(1);
+  });
+
   it("매칭되는 빵이 없는 검색어 → 안내가 표시되고, 지우면 25종 전체가 복원된다", async () => {
     render(<BreadTypePicker breadTypes={BREAD_TYPES} onSelect={vi.fn()} />);
 

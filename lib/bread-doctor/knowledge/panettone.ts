@@ -101,7 +101,6 @@ const ASSOCIATIONS: Association[] = [
   { causeId: "oven-too-hot", symptomId: "burnt-outside-raw-inside", weight: 2 },
 
   { causeId: "oven-too-cool", symptomId: "gummy", weight: 2 },
-  { causeId: "oven-too-cool", symptomId: "burnt-outside-raw-inside", weight: 1 },
   { causeId: "oven-too-cool", symptomId: "pale", weight: 2 },
 
   { causeId: "enr-heavy-crumb", symptomId: "no-rise", weight: 1 },

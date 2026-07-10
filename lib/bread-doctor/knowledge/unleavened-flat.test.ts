@@ -27,10 +27,10 @@ describe("무발효 플랫브레드 2종 — 매트릭스 결론의 대표 PEAKE
     );
   });
 
-  it("라바쉬: 겉탐속덜익음+두껍고찐득 → 1순위 두께 불균일/과다", () => {
+  it("라바쉬: 겉탐속덜익음+두껍고찐득 → 1순위 손/밀대로 두께 불균일하게 성형", () => {
     expect(
       topCauseName(LAVASH, ["burnt-outside-raw-inside", "flat-doughy-thick"]),
-    ).toBe("두께 불균일/과다");
+    ).toBe("손/밀대로 두께 불균일하게 성형");
   });
 
   it("라바쉬: 말라부서짐+질기고뻣뻣 → 1순위 수분 부족", () => {
@@ -40,7 +40,7 @@ describe("무발효 플랫브레드 2종 — 매트릭스 결론의 대표 PEAKE
   });
 
   it("tortilla↔lavash 공유 flat-* 코드가 동일 이름으로 재사용된다", () => {
-    for (const id of ["flat-underrest", "flat-underhydrated", "flat-uneven-thickness"]) {
+    for (const id of ["flat-underrest", "flat-underhydrated", "flat-uneven-rolling"]) {
       const causeNames = [TORTILLA, LAVASH]
         .map((k) => k.causes.find((c) => c.id === id)?.name)
         .filter(Boolean);

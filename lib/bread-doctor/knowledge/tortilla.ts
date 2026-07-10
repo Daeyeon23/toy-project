@@ -15,8 +15,9 @@ import type {
  * 밀가루 토르티야 진단 지식베이스 — matrices/tortilla.md(King Arthur Baking·ATK 인용,
  * PEAKED 판정). 무발효 플랫브레드라 CORE 발효 코드(yeast-dead/underproof/overproof/
  * cold-environment)는 전혀 쓰지 않는다. `flat-*` 신규 코드는 lavash.ts가 이름 그대로
- * 재사용한다. `flat-uneven-thickness`는 Task 8(pizza-dough 등)에서 이미 등록된 이름
- * "두께가 불균일함"을 그대로 따른다(빵 배치를 넘나드는 재사용).
+ * 재사용한다. 원인 `flat-uneven-rolling`은 pita.ts/english-muffin.ts가 이미 쓰는 이름을
+ * 그대로 따른다 — 같은 문자열이 다른 파일에서 증상 id(`flat-uneven-thickness`)로도 쓰이므로
+ * 원인과 증상에 별도 id를 유지해 네임스페이스 충돌을 피한다.
  */
 
 const SYMPTOMS: Symptom[] = [
@@ -57,8 +58,8 @@ const CAUSES: Cause[] = [
     action: "따뜻한 물(약 40~50℃)을 반죽이 \"촉촉하지만 안 붙는\" 농도가 될 때까지 조금씩 추가하세요.",
   },
   {
-    id: "flat-uneven-thickness",
-    name: "두께 불균일/과다",
+    id: "flat-uneven-rolling",
+    name: "손/밀대로 두께 불균일하게 성형",
     why: "밀대로 고르게 밀지 못하면 두꺼운 부분은 속까지 안 익고, 얇은 부분은 타거나 뚫립니다.",
     action: "중심에서 바깥으로(\"해가 뻗어나가듯\") 밀고, 90도씩 돌려가며 두께를 확인하세요.",
   },
@@ -93,9 +94,9 @@ const ASSOCIATIONS: Association[] = [
   { causeId: "flat-underhydrated", symptomId: "flat-no-bubbles", weight: 1 },
   { causeId: "flat-underhydrated", symptomId: "flat-dry-brittle", weight: 2 },
 
-  { causeId: "flat-uneven-thickness", symptomId: "flat-no-bubbles", weight: 1 },
-  { causeId: "flat-uneven-thickness", symptomId: "flat-doughy-thick", weight: 2 },
-  { causeId: "flat-uneven-thickness", symptomId: "burnt-outside-raw-inside", weight: 2 },
+  { causeId: "flat-uneven-rolling", symptomId: "flat-no-bubbles", weight: 1 },
+  { causeId: "flat-uneven-rolling", symptomId: "flat-doughy-thick", weight: 2 },
+  { causeId: "flat-uneven-rolling", symptomId: "burnt-outside-raw-inside", weight: 2 },
 
   { causeId: "oven-too-hot", symptomId: "flat-dry-brittle", weight: 1 },
   { causeId: "oven-too-hot", symptomId: "burnt-outside-raw-inside", weight: 2 },

@@ -30,6 +30,26 @@ describe.each(Object.entries(BREAD_KNOWLEDGE))(
         expect(symptomIds.has(entry.symptomId)).toBe(true);
       }
     });
+
+    it("모든 증상이 최소 1개 association에서 참조된다 (고아 증상 없음)", () => {
+      const referencedSymptomIds = new Set(
+        knowledge.associations.map((a) => a.symptomId),
+      );
+      const orphanSymptoms = knowledge.symptoms
+        .map((s) => s.id)
+        .filter((id) => !referencedSymptomIds.has(id));
+      expect(orphanSymptoms).toEqual([]);
+    });
+
+    it("모든 원인이 최소 1개 association에서 참조된다 (고아 원인 없음)", () => {
+      const referencedCauseIds = new Set(
+        knowledge.associations.map((a) => a.causeId),
+      );
+      const orphanCauses = knowledge.causes
+        .map((c) => c.id)
+        .filter((id) => !referencedCauseIds.has(id));
+      expect(orphanCauses).toEqual([]);
+    });
   },
 );
 
