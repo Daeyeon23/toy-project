@@ -2,8 +2,10 @@ import { describe, expect, it, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { SymptomChecklist } from "@/components/bread-doctor/symptom-checklist";
-import { SYMPTOMS as FULL_SYMPTOMS } from "@/lib/bread-doctor/knowledge-base";
+import { getBreadKnowledge } from "@/lib/bread-doctor/knowledge-base";
 import type { Symptom } from "@/types/bread-doctor";
+
+const FULL_SYMPTOMS = getBreadKnowledge("white-loaf").symptoms;
 
 const SYMPTOMS: Symptom[] = [
   { id: "no-rise", label: "전혀/거의 안 부풂" },

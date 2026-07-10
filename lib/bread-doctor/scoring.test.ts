@@ -5,11 +5,21 @@ import {
   resolveProximateQuestion,
   rankCauses,
 } from "@/lib/bread-doctor/scoring";
+import { WHITE_LOAF } from "@/lib/bread-doctor/knowledge/white-loaf";
 import type { DiagnosisOutcome } from "@/types/bread-doctor";
+
+function diagnoseWhiteLoaf(symptomIds: string[], questionsAskedCount = 0) {
+  return diagnose(symptomIds, {
+    causes: WHITE_LOAF.causes,
+    associations: WHITE_LOAF.associations,
+    questions: WHITE_LOAF.questions,
+    questionsAskedCount,
+  });
+}
 
 describe("diagnose", () => {
   it("발효 부족 조합 → 1순위가 발효 부족", () => {
-    const outcome = diagnose(["no-rise", "gummy", "blowout"]);
+    const outcome = diagnoseWhiteLoaf(["no-rise", "gummy", "blowout"]);
     expect(outcome.kind).toBe("result");
     const causes = (outcome as Extract<DiagnosisOutcome, { kind: "result" }>)
       .causes;
@@ -17,7 +27,7 @@ describe("diagnose", () => {
   });
 
   it("동점 3위는 고정 id 순서로 저온 환경이 선택되고 카드가 정확히 3개", () => {
-    const outcome = diagnose(["no-rise", "gummy", "blowout"]);
+    const outcome = diagnoseWhiteLoaf(["no-rise", "gummy", "blowout"]);
     const causes = (outcome as Extract<DiagnosisOutcome, { kind: "result" }>)
       .causes;
     expect(causes).toHaveLength(3);
@@ -29,7 +39,7 @@ describe("diagnose", () => {
   });
 
   it("과발효 조합 → 1순위가 과발효", () => {
-    const outcome = diagnose(["collapsed", "large-holes", "sour-smell"]);
+    const outcome = diagnoseWhiteLoaf(["collapsed", "large-holes", "sour-smell"]);
     expect(outcome.kind).toBe("result");
     const causes = (outcome as Extract<DiagnosisOutcome, { kind: "result" }>)
       .causes;
@@ -37,7 +47,7 @@ describe("diagnose", () => {
   });
 
   it("오븐 고온 조합 → 1순위가 오븐 온도가 높음, 카드 2개", () => {
-    const outcome = diagnose(["burnt-outside-raw-inside", "thick-crust"]);
+    const outcome = diagnoseWhiteLoaf(["burnt-outside-raw-inside", "thick-crust"]);
     expect(outcome.kind).toBe("result");
     const causes = (outcome as Extract<DiagnosisOutcome, { kind: "result" }>)
       .causes;
@@ -46,7 +56,7 @@ describe("diagnose", () => {
   });
 
   it("근접 쌍(이스트 문제 ↔ 발효 부족)만 있으면 판별 질문을 반환한다", () => {
-    const outcome = diagnose(["no-rise", "gummy"]);
+    const outcome = diagnoseWhiteLoaf(["no-rise", "gummy"]);
     expect(outcome.kind).toBe("question");
     const question = (
       outcome as Extract<DiagnosisOutcome, { kind: "question" }>
@@ -61,7 +71,7 @@ describe("diagnose", () => {
   });
 
   it("CauseResult에는 원시 점수·퍼센트 숫자 필드가 없다", () => {
-    const outcome = diagnose(["no-rise", "gummy", "blowout"]);
+    const outcome = diagnoseWhiteLoaf(["no-rise", "gummy", "blowout"]);
     const causes = (outcome as Extract<DiagnosisOutcome, { kind: "result" }>)
       .causes;
     for (const result of causes) {
@@ -71,13 +81,13 @@ describe("diagnose", () => {
   });
 
   it("어떤 원인과도 연관 없는 증상만 있으면 빈 결과를 반환한다", () => {
-    const outcome = diagnose(["no-such-symptom"]);
+    const outcome = diagnoseWhiteLoaf(["no-such-symptom"]);
     expect(outcome).toEqual({ kind: "result", causes: [] });
   });
 });
 
 describe("answerQuestion", () => {
-  const outcome = diagnose(["no-rise", "gummy"]) as Extract<
+  const outcome = diagnoseWhiteLoaf(["no-rise", "gummy"]) as Extract<
     DiagnosisOutcome,
     { kind: "question" }
   >;
@@ -109,19 +119,19 @@ describe("answerQuestion", () => {
 });
 
 describe("resolveProximateQuestion — 최대 질문 횟수 캡", () => {
-  const ranked = rankCauses(["no-rise", "gummy"]);
+  const ranked = rankCauses(["no-rise", "gummy"], WHITE_LOAF.causes, WHITE_LOAF.associations);
   const pair = [ranked[0], ranked[1]] as [
     (typeof ranked)[number],
     (typeof ranked)[number],
   ];
 
   it("캡 미도달(0, 1)이면 질문을 반환한다", () => {
-    expect(resolveProximateQuestion(pair, 0)).not.toBeNull();
-    expect(resolveProximateQuestion(pair, 1)).not.toBeNull();
+    expect(resolveProximateQuestion(pair, 0, WHITE_LOAF.questions)).not.toBeNull();
+    expect(resolveProximateQuestion(pair, 1, WHITE_LOAF.questions)).not.toBeNull();
   });
 
   it("캡 도달(2 이상)이면 null을 반환해 결과로 강제 전환된다", () => {
-    expect(resolveProximateQuestion(pair, 2)).toBeNull();
-    expect(resolveProximateQuestion(pair, 3)).toBeNull();
+    expect(resolveProximateQuestion(pair, 2, WHITE_LOAF.questions)).toBeNull();
+    expect(resolveProximateQuestion(pair, 3, WHITE_LOAF.questions)).toBeNull();
   });
 });

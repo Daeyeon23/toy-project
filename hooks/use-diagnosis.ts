@@ -2,9 +2,12 @@
 
 import { useCallback, useState } from "react";
 import { BREAD_TYPES } from "@/config/bread-doctor";
-import { SYMPTOMS } from "@/lib/bread-doctor/knowledge-base";
+import { getBreadKnowledge } from "@/lib/bread-doctor/knowledge-base";
 import { answerQuestion, diagnose } from "@/lib/bread-doctor/scoring";
 import type { BreadType, DiagnosisOutcome, Symptom } from "@/types/bread-doctor";
+
+// TODO(Task 3): 식빵으로 고정된 KB 조회를 selectedBreadId 기반으로 교체한다.
+const WHITE_LOAF = getBreadKnowledge("white-loaf");
 
 export type Step = "bread" | "symptoms" | "question" | "result";
 
@@ -42,7 +45,12 @@ export function useDiagnosis(): UseDiagnosisResult {
 
   const runDiagnosis = useCallback(() => {
     if (selectedSymptomIds.length === 0) return;
-    const result = diagnose(selectedSymptomIds, { questionsAskedCount });
+    const result = diagnose(selectedSymptomIds, {
+      causes: WHITE_LOAF.causes,
+      associations: WHITE_LOAF.associations,
+      questions: WHITE_LOAF.questions,
+      questionsAskedCount,
+    });
     setOutcome(result);
     setStep(result.kind === "question" ? "question" : "result");
   }, [selectedSymptomIds, questionsAskedCount]);
@@ -67,7 +75,7 @@ export function useDiagnosis(): UseDiagnosisResult {
   return {
     step,
     breadTypes: BREAD_TYPES,
-    symptoms: SYMPTOMS,
+    symptoms: WHITE_LOAF.symptoms,
     selectedSymptomIds,
     outcome,
     selectBread,

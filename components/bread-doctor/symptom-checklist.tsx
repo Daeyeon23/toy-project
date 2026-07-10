@@ -19,8 +19,12 @@ import {
   EmptyTitle,
 } from "@/components/ui/empty";
 import { filterSymptoms } from "@/lib/bread-doctor/search";
+import { getBreadKnowledge } from "@/lib/bread-doctor/knowledge-base";
 import type { Symptom } from "@/types/bread-doctor";
 import { SearchIcon, SearchXIcon, StethoscopeIcon } from "lucide-react";
+
+// TODO(Task 3): synonyms를 prop으로 받아 선택된 빵의 사전을 주입한다.
+const WHITE_LOAF_SYNONYMS = getBreadKnowledge("white-loaf").synonyms;
 
 interface SymptomChecklistProps {
   symptoms: Symptom[];
@@ -37,7 +41,7 @@ export function SymptomChecklist({
 }: SymptomChecklistProps) {
   const [query, setQuery] = useState("");
   const hasSelection = selectedSymptomIds.length > 0;
-  const visibleSymptoms = filterSymptoms(query, symptoms);
+  const visibleSymptoms = filterSymptoms(query, symptoms, WHITE_LOAF_SYNONYMS);
 
   return (
     <div className="flex flex-col gap-6">

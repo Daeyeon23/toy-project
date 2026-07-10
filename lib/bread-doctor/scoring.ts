@@ -1,9 +1,4 @@
 import {
-  ASSOCIATIONS,
-  CAUSES,
-  DISCRIMINATOR_QUESTIONS,
-} from "@/lib/bread-doctor/knowledge-base";
-import {
   MAX_DISCRIMINATOR_QUESTIONS,
   MAX_RESULT_CAUSES,
   PROXIMITY_THRESHOLD,
@@ -21,18 +16,19 @@ export interface RankedCause {
   score: number;
 }
 
+/** causes·associations는 선택된 빵의 KB에서 주입한다(전역 기본값 없음 — 빵 경계 격리). */
 export interface DiagnoseOptions {
-  questionsAskedCount?: number;
-  causes?: Cause[];
-  associations?: Association[];
+  causes: Cause[];
+  associations: Association[];
   questions?: DiscriminatorQuestion[];
+  questionsAskedCount?: number;
 }
 
 /** 증상 조합에 대해 원인별 점수를 매기고, 0점을 제외한 뒤 점수 내림차순·동점은 고정 id 순서로 정렬한다. */
 export function rankCauses(
   symptomIds: string[],
-  causes: Cause[] = CAUSES,
-  associations: Association[] = ASSOCIATIONS,
+  causes: Cause[],
+  associations: Association[],
 ): RankedCause[] {
   const symptomIdSet = new Set(symptomIds);
   const scoreByCauseId = new Map<string, number>();
@@ -63,7 +59,7 @@ export function findProximateTopPair(
 export function resolveProximateQuestion(
   pair: [RankedCause, RankedCause],
   questionsAskedCount: number,
-  questions: DiscriminatorQuestion[] = DISCRIMINATOR_QUESTIONS,
+  questions: DiscriminatorQuestion[] = [],
 ): DiscriminatorQuestion | null {
   if (questionsAskedCount >= MAX_DISCRIMINATOR_QUESTIONS) return null;
   const [a, b] = pair;
@@ -95,7 +91,7 @@ function buildResult(ranked: RankedCause[]): DiagnosisOutcome {
 /** 결정론적 진단 엔진 — 순수 함수. 동일 입력은 항상 동일 출력을 반환한다. */
 export function diagnose(
   symptomIds: string[],
-  opts: DiagnoseOptions = {},
+  opts: DiagnoseOptions,
 ): DiagnosisOutcome {
   const ranked = rankCauses(symptomIds, opts.causes, opts.associations);
   if (ranked.length === 0) return { kind: "result", causes: [] };
@@ -105,7 +101,7 @@ export function diagnose(
     const question = resolveProximateQuestion(
       proximatePair,
       opts.questionsAskedCount ?? 0,
-      opts.questions,
+      opts.questions ?? [],
     );
     if (question) {
       const maxScore = ranked[0].score;

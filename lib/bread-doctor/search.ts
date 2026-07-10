@@ -1,14 +1,13 @@
-import { SYMPTOMS, SYNONYMS } from "@/lib/bread-doctor/knowledge-base";
 import type { Symptom, SynonymEntry } from "@/types/bread-doctor";
 
 /**
  * 미리 정의된 동의어 사전으로만 증상 목록을 좁힌다 — 자유 텍스트 해석(LLM/키워드 파싱) 없음.
- * 검색어가 비어 있으면 전체 목록을 반환한다.
+ * 검색어가 비어 있으면 전체 목록을 반환한다. symptoms·synonyms는 선택된 빵의 KB에서 주입한다.
  */
 export function filterSymptoms(
   query: string,
-  symptoms: Symptom[] = SYMPTOMS,
-  synonyms: SynonymEntry[] = SYNONYMS,
+  symptoms: Symptom[],
+  synonyms: SynonymEntry[],
 ): Symptom[] {
   const normalizedQuery = query.trim();
   if (!normalizedQuery) return symptoms;

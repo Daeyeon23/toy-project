@@ -53,3 +53,12 @@ export type DiagnosisOutcome =
       question: DiscriminatorQuestion;
       candidates: CauseResult[];
     };
+
+/** 빵 1종의 진단 지식 묶음 — 증상·원인·매트릭스·판별 질문·동의어 사전. */
+export interface BreadKnowledge {
+  symptoms: Symptom[];
+  causes: Cause[];
+  associations: Association[];
+  questions: DiscriminatorQuestion[];
+  synonyms: SynonymEntry[];
+}
