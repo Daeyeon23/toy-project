@@ -32,6 +32,7 @@ describe("ResultCards", () => {
         causes={CAUSES}
         selectedSymptomLabels={["전혀/거의 안 부풂"]}
         onRestart={vi.fn()}
+        onChangeBread={vi.fn()}
       />,
     );
 
@@ -43,7 +44,14 @@ describe("ResultCards", () => {
   });
 
   it("면책 고지 문구가 표시된다", () => {
-    render(<ResultCards causes={CAUSES} selectedSymptomLabels={[]} onRestart={vi.fn()} />);
+    render(
+      <ResultCards
+        causes={CAUSES}
+        selectedSymptomLabels={[]}
+        onRestart={vi.fn()}
+        onChangeBread={vi.fn()}
+      />,
+    );
 
     expect(
       screen.getByText(
@@ -58,6 +66,7 @@ describe("ResultCards", () => {
         causes={CAUSES}
         selectedSymptomLabels={["전혀/거의 안 부풂"]}
         onRestart={vi.fn()}
+        onChangeBread={vi.fn()}
       />,
     );
 
@@ -69,11 +78,32 @@ describe("ResultCards", () => {
   it("증상 바꿔 다시 진단 버튼 클릭 시 onRestart가 호출된다", async () => {
     const onRestart = vi.fn();
     render(
-      <ResultCards causes={CAUSES} selectedSymptomLabels={[]} onRestart={onRestart} />,
+      <ResultCards
+        causes={CAUSES}
+        selectedSymptomLabels={[]}
+        onRestart={onRestart}
+        onChangeBread={vi.fn()}
+      />,
     );
 
     await userEvent.click(screen.getByRole("button", { name: /다시 진단/ }));
 
     expect(onRestart).toHaveBeenCalledTimes(1);
+  });
+
+  it("빵 다시 고르기 버튼 클릭 시 onChangeBread가 호출된다", async () => {
+    const onChangeBread = vi.fn();
+    render(
+      <ResultCards
+        causes={CAUSES}
+        selectedSymptomLabels={[]}
+        onRestart={vi.fn()}
+        onChangeBread={onChangeBread}
+      />,
+    );
+
+    await userEvent.click(screen.getByRole("button", { name: /빵 다시 고르기/ }));
+
+    expect(onChangeBread).toHaveBeenCalledTimes(1);
   });
 });

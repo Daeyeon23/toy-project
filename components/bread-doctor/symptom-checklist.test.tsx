@@ -5,7 +5,9 @@ import { SymptomChecklist } from "@/components/bread-doctor/symptom-checklist";
 import { getBreadKnowledge } from "@/lib/bread-doctor/knowledge-base";
 import type { Symptom } from "@/types/bread-doctor";
 
-const FULL_SYMPTOMS = getBreadKnowledge("white-loaf").symptoms;
+const WHITE_LOAF = getBreadKnowledge("white-loaf");
+const FULL_SYMPTOMS = WHITE_LOAF.symptoms;
+const FULL_SYNONYMS = WHITE_LOAF.synonyms;
 
 const SYMPTOMS: Symptom[] = [
   { id: "no-rise", label: "전혀/거의 안 부풂" },
@@ -17,6 +19,7 @@ describe("SymptomChecklist", () => {
     render(
       <SymptomChecklist
         symptoms={SYMPTOMS}
+        synonyms={[]}
         selectedSymptomIds={[]}
         onToggleSymptom={vi.fn()}
         onDiagnose={vi.fn()}
@@ -30,6 +33,7 @@ describe("SymptomChecklist", () => {
     render(
       <SymptomChecklist
         symptoms={SYMPTOMS}
+        synonyms={[]}
         selectedSymptomIds={["no-rise"]}
         onToggleSymptom={vi.fn()}
         onDiagnose={vi.fn()}
@@ -44,6 +48,7 @@ describe("SymptomChecklist", () => {
     render(
       <SymptomChecklist
         symptoms={SYMPTOMS}
+        synonyms={[]}
         selectedSymptomIds={[]}
         onToggleSymptom={onToggleSymptom}
         onDiagnose={vi.fn()}
@@ -60,6 +65,7 @@ describe("SymptomChecklist", () => {
     render(
       <SymptomChecklist
         symptoms={SYMPTOMS}
+        synonyms={[]}
         selectedSymptomIds={["no-rise"]}
         onToggleSymptom={vi.fn()}
         onDiagnose={onDiagnose}
@@ -77,6 +83,7 @@ describe("SymptomChecklist — 증상 검색", () => {
     render(
       <SymptomChecklist
         symptoms={FULL_SYMPTOMS}
+        synonyms={FULL_SYNONYMS}
         selectedSymptomIds={[]}
         onToggleSymptom={vi.fn()}
         onDiagnose={vi.fn()}
@@ -97,6 +104,7 @@ describe("SymptomChecklist — 증상 검색", () => {
     const { rerender } = render(
       <SymptomChecklist
         symptoms={FULL_SYMPTOMS}
+        synonyms={FULL_SYNONYMS}
         selectedSymptomIds={[]}
         onToggleSymptom={onToggleSymptom}
         onDiagnose={vi.fn()}
@@ -113,6 +121,7 @@ describe("SymptomChecklist — 증상 검색", () => {
     rerender(
       <SymptomChecklist
         symptoms={FULL_SYMPTOMS}
+        synonyms={FULL_SYNONYMS}
         selectedSymptomIds={["gummy"]}
         onToggleSymptom={onToggleSymptom}
         onDiagnose={vi.fn()}
@@ -128,6 +137,7 @@ describe("SymptomChecklist — 증상 검색", () => {
     render(
       <SymptomChecklist
         symptoms={FULL_SYMPTOMS}
+        synonyms={FULL_SYNONYMS}
         selectedSymptomIds={[]}
         onToggleSymptom={vi.fn()}
         onDiagnose={vi.fn()}
@@ -146,6 +156,7 @@ describe("SymptomChecklist — 증상 검색", () => {
     render(
       <SymptomChecklist
         symptoms={FULL_SYMPTOMS}
+        synonyms={FULL_SYNONYMS}
         selectedSymptomIds={[]}
         onToggleSymptom={vi.fn()}
         onDiagnose={vi.fn()}

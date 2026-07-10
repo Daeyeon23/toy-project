@@ -4,7 +4,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import type { CauseResult, Strength } from "@/types/bread-doctor";
-import { RotateCcwIcon } from "lucide-react";
+import { RotateCcwIcon, WheatIcon } from "lucide-react";
 
 const STRENGTH_LABEL: Record<Strength, string> = {
   high: "가능성 높음",
@@ -15,12 +15,14 @@ interface ResultCardsProps {
   causes: CauseResult[];
   selectedSymptomLabels: string[];
   onRestart: () => void;
+  onChangeBread: () => void;
 }
 
 export function ResultCards({
   causes,
   selectedSymptomLabels,
   onRestart,
+  onChangeBread,
 }: ResultCardsProps) {
   return (
     <div className="flex flex-col gap-4">
@@ -77,10 +79,16 @@ export function ResultCards({
         ))}
       </div>
 
-      <Button variant="outline" onClick={onRestart}>
-        <RotateCcwIcon data-icon="inline-start" />
-        증상 바꿔 다시 진단
-      </Button>
+      <div className="grid grid-cols-1 gap-2 @md:grid-cols-2">
+        <Button variant="outline" onClick={onRestart}>
+          <RotateCcwIcon data-icon="inline-start" />
+          증상 바꿔 다시 진단
+        </Button>
+        <Button variant="outline" onClick={onChangeBread}>
+          <WheatIcon data-icon="inline-start" />
+          빵 다시 고르기
+        </Button>
+      </div>
     </div>
   );
 }

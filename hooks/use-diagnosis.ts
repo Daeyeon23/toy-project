@@ -1,20 +1,25 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { BREAD_TYPES } from "@/config/bread-doctor";
 import { getBreadKnowledge } from "@/lib/bread-doctor/knowledge-base";
 import { answerQuestion, diagnose } from "@/lib/bread-doctor/scoring";
-import type { BreadType, DiagnosisOutcome, Symptom } from "@/types/bread-doctor";
-
-// TODO(Task 3): 식빵으로 고정된 KB 조회를 selectedBreadId 기반으로 교체한다.
-const WHITE_LOAF = getBreadKnowledge("white-loaf");
+import type {
+  BreadType,
+  DiagnosisOutcome,
+  SynonymEntry,
+  Symptom,
+} from "@/types/bread-doctor";
 
 export type Step = "bread" | "symptoms" | "question" | "result";
 
 export interface UseDiagnosisResult {
   step: Step;
   breadTypes: BreadType[];
+  selectedBreadId: string | null;
+  selectedBreadName: string | null;
   symptoms: Symptom[];
+  synonyms: SynonymEntry[];
   selectedSymptomIds: string[];
   outcome: DiagnosisOutcome | null;
   selectBread: (breadTypeId: string) => void;
@@ -22,16 +27,27 @@ export interface UseDiagnosisResult {
   runDiagnosis: () => void;
   answerDiscriminatorQuestion: (answer: "yes" | "no" | "skip") => void;
   restart: () => void;
+  changeBread: () => void;
 }
 
-/** 브레드 닥터의 스텝 머신 — 빵 선택부터 결과까지 흐름을 소유한다. */
+/** 브레드 닥터의 스텝 머신 — 빵 선택부터 결과까지 흐름과 선택된 빵의 KB 주입을 소유한다. */
 export function useDiagnosis(): UseDiagnosisResult {
   const [step, setStep] = useState<Step>("bread");
+  const [selectedBreadId, setSelectedBreadId] = useState<string | null>(null);
   const [selectedSymptomIds, setSelectedSymptomIds] = useState<string[]>([]);
   const [outcome, setOutcome] = useState<DiagnosisOutcome | null>(null);
   const [questionsAskedCount, setQuestionsAskedCount] = useState(0);
 
-  const selectBread = useCallback(() => {
+  const knowledge = useMemo(
+    () => (selectedBreadId ? getBreadKnowledge(selectedBreadId) : null),
+    [selectedBreadId],
+  );
+
+  const selectBread = useCallback((breadTypeId: string) => {
+    setSelectedBreadId(breadTypeId);
+    setSelectedSymptomIds([]);
+    setOutcome(null);
+    setQuestionsAskedCount(0);
     setStep("symptoms");
   }, []);
 
@@ -44,16 +60,16 @@ export function useDiagnosis(): UseDiagnosisResult {
   }, []);
 
   const runDiagnosis = useCallback(() => {
-    if (selectedSymptomIds.length === 0) return;
+    if (selectedSymptomIds.length === 0 || !knowledge) return;
     const result = diagnose(selectedSymptomIds, {
-      causes: WHITE_LOAF.causes,
-      associations: WHITE_LOAF.associations,
-      questions: WHITE_LOAF.questions,
+      causes: knowledge.causes,
+      associations: knowledge.associations,
+      questions: knowledge.questions,
       questionsAskedCount,
     });
     setOutcome(result);
     setStep(result.kind === "question" ? "question" : "result");
-  }, [selectedSymptomIds, questionsAskedCount]);
+  }, [selectedSymptomIds, questionsAskedCount, knowledge]);
 
   const answerDiscriminatorQuestion = useCallback(
     (answer: "yes" | "no" | "skip") => {
@@ -72,10 +88,25 @@ export function useDiagnosis(): UseDiagnosisResult {
     setStep("symptoms");
   }, []);
 
+  /** 빵을 다시 고른다 — 선택 빵·증상·결과를 모두 초기화하고 피커로 돌아간다 (Scenario 0-C). */
+  const changeBread = useCallback(() => {
+    setSelectedBreadId(null);
+    setSelectedSymptomIds([]);
+    setOutcome(null);
+    setQuestionsAskedCount(0);
+    setStep("bread");
+  }, []);
+
+  const selectedBreadName =
+    BREAD_TYPES.find((bread) => bread.id === selectedBreadId)?.name ?? null;
+
   return {
     step,
     breadTypes: BREAD_TYPES,
-    symptoms: WHITE_LOAF.symptoms,
+    selectedBreadId,
+    selectedBreadName,
+    symptoms: knowledge?.symptoms ?? [],
+    synonyms: knowledge?.synonyms ?? [],
     selectedSymptomIds,
     outcome,
     selectBread,
@@ -83,5 +114,6 @@ export function useDiagnosis(): UseDiagnosisResult {
     runDiagnosis,
     answerDiscriminatorQuestion,
     restart,
+    changeBread,
   };
 }

@@ -6,9 +6,8 @@ import { SymptomChecklist } from "@/components/bread-doctor/symptom-checklist";
 import { DiscriminatorQuestionCard } from "@/components/bread-doctor/discriminator-question";
 import { ResultCards } from "@/components/bread-doctor/result-cards";
 import { Badge } from "@/components/ui/badge";
-import { InfoIcon } from "lucide-react";
-
-const SCOPE_NOTICE = "기본 이스트 식빵 기준";
+import { Button } from "@/components/ui/button";
+import { InfoIcon, LayoutGridIcon, WheatIcon } from "lucide-react";
 
 export function BreadDoctor() {
   const diagnosis = useDiagnosis();
@@ -21,10 +20,17 @@ export function BreadDoctor() {
     <div className="mx-auto flex min-h-screen w-full max-w-2xl flex-col gap-6 p-6">
       <header className="flex items-start justify-between gap-3">
         <h1 className="text-xl font-bold">🍞 브레드 닥터</h1>
-        <Badge variant="secondary">
-          <InfoIcon data-icon="inline-start" />
-          {SCOPE_NOTICE}
-        </Badge>
+        {diagnosis.step === "bread" ? (
+          <Badge variant="secondary">
+            <LayoutGridIcon data-icon="inline-start" />
+            {diagnosis.breadTypes.length}종
+          </Badge>
+        ) : (
+          <Badge variant="secondary">
+            <InfoIcon data-icon="inline-start" />
+            {diagnosis.selectedBreadName} 기준
+          </Badge>
+        )}
       </header>
 
       {diagnosis.step === "bread" && (
@@ -35,10 +41,15 @@ export function BreadDoctor() {
       )}
 
       {diagnosis.step === "symptoms" && (
-        <section aria-label="증상 선택">
-          <h2 className="mb-4 text-lg font-semibold">증상을 선택해 주세요</h2>
+        <section aria-label="증상 선택" className="flex flex-col gap-4">
+          <h2 className="text-lg font-semibold">증상을 선택해 주세요</h2>
+          <Button variant="outline" onClick={diagnosis.changeBread}>
+            <WheatIcon data-icon="inline-start" />
+            빵 다시 고르기
+          </Button>
           <SymptomChecklist
             symptoms={diagnosis.symptoms}
+            synonyms={diagnosis.synonyms}
             selectedSymptomIds={diagnosis.selectedSymptomIds}
             onToggleSymptom={diagnosis.toggleSymptom}
             onDiagnose={diagnosis.runDiagnosis}
@@ -58,6 +69,7 @@ export function BreadDoctor() {
           causes={diagnosis.outcome.causes}
           selectedSymptomLabels={selectedSymptomLabels}
           onRestart={diagnosis.restart}
+          onChangeBread={diagnosis.changeBread}
         />
       )}
     </div>

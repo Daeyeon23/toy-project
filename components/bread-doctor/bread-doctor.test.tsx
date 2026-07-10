@@ -24,10 +24,12 @@ describe("BreadDoctor", () => {
     ).not.toBeInTheDocument();
   });
 
-  it("범위 고지가 항상 표시된다", () => {
+  it("범위 고지는 빵을 선택한 뒤 그 빵 이름으로 표시된다", async () => {
     render(<BreadDoctor />);
 
-    expect(screen.getByText("기본 이스트 식빵 기준")).toBeInTheDocument();
+    await userEvent.click(screen.getByRole("button", { name: "식빵" }));
+
+    expect(screen.getByText("식빵 기준")).toBeInTheDocument();
   });
 
   it("Scenario 1: 안부풂+속떡짐+옆구리터짐 선택 → 판별 질문 없이 1순위 발효 부족", async () => {
@@ -41,6 +43,8 @@ describe("BreadDoctor", () => {
 
     expect(screen.queryByText("확인 질문")).not.toBeInTheDocument();
     expect(screen.getByText("발효 부족")).toBeInTheDocument();
+    // 불변: 결과 화면에도 범위 고지가 선택 빵 이름으로 표시된다
+    expect(screen.getByText("식빵 기준")).toBeInTheDocument();
   });
 
   it("Scenario 2: 주저앉음+큰기공+신맛 선택 → 1순위 과발효", async () => {
@@ -127,5 +131,37 @@ describe("BreadDoctor", () => {
 
     expect(screen.getByText("이스트 문제")).toBeInTheDocument();
     expect(screen.getByText("발효 부족")).toBeInTheDocument();
+  });
+
+  it("Scenario 0-C: 증상 화면에서 빵 다시 고르기 → 빵 선택 화면으로 돌아가고 증상 선택이 초기화된다", async () => {
+    render(<BreadDoctor />);
+
+    await userEvent.click(screen.getByRole("button", { name: "식빵" }));
+    await userEvent.click(screen.getByLabelText("전혀/거의 안 부풂"));
+    await userEvent.click(screen.getByRole("button", { name: /빵 다시 고르기/ }));
+
+    expect(
+      screen.queryByRole("heading", { name: "증상을 선택해 주세요" }),
+    ).not.toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "식빵" })).toBeInTheDocument();
+
+    await userEvent.click(screen.getByRole("button", { name: "식빵" }));
+    expect(screen.getByLabelText("전혀/거의 안 부풂")).not.toBeChecked();
+  });
+
+  it("Scenario 0-C: 결과 화면에서 빵 다시 고르기 → 빵 선택 화면으로 돌아가고 결과가 초기화된다", async () => {
+    render(<BreadDoctor />);
+
+    await userEvent.click(screen.getByRole("button", { name: "식빵" }));
+    await userEvent.click(screen.getByLabelText("부풀다 주저앉음"));
+    await userEvent.click(screen.getByLabelText("기공이 너무 크고 불규칙"));
+    await userEvent.click(screen.getByLabelText("신맛 / 이상한 냄새"));
+    await userEvent.click(screen.getByRole("button", { name: /진단하기/ }));
+    expect(screen.getByText("과발효")).toBeInTheDocument();
+
+    await userEvent.click(screen.getByRole("button", { name: /빵 다시 고르기/ }));
+
+    expect(screen.queryByText("과발효")).not.toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "식빵" })).toBeInTheDocument();
   });
 });
