@@ -1,4 +1,7 @@
-import { CORE_CAUSES, CORE_SYMPTOMS } from "@/lib/bread-doctor/knowledge/_core";
+import {
+  coreCauseName,
+  coreSymptomLabel,
+} from "@/lib/bread-doctor/knowledge/_core";
 import type {
   Association,
   BreadKnowledge,
@@ -14,29 +17,17 @@ import type {
  * why/action만 사워도우(천연 발효 스타터) 맥락으로 다시 쓴다.
  */
 
-function core(id: string): string {
-  const cause = CORE_CAUSES.find((c) => c.id === id);
-  if (!cause) throw new Error(`Unknown CORE cause id: ${id}`);
-  return cause.name;
-}
-
-function coreLabel(id: string): string {
-  const symptom = CORE_SYMPTOMS.find((s) => s.id === id);
-  if (!symptom) throw new Error(`Unknown CORE symptom id: ${id}`);
-  return symptom.label;
-}
-
 const SYMPTOMS: Symptom[] = [
-  { id: "no-rise", label: coreLabel("no-rise") },
-  { id: "collapsed", label: coreLabel("collapsed") },
-  { id: "gummy", label: coreLabel("gummy") },
-  { id: "burnt-outside-raw-inside", label: coreLabel("burnt-outside-raw-inside") },
-  { id: "pale", label: coreLabel("pale") },
-  { id: "blowout", label: coreLabel("blowout") },
-  { id: "large-holes", label: coreLabel("large-holes") },
-  { id: "too-wet", label: coreLabel("too-wet") },
-  { id: "thick-crust", label: coreLabel("thick-crust") },
-  { id: "sour-smell", label: coreLabel("sour-smell") },
+  { id: "no-rise", label: coreSymptomLabel("no-rise") },
+  { id: "collapsed", label: coreSymptomLabel("collapsed") },
+  { id: "gummy", label: coreSymptomLabel("gummy") },
+  { id: "burnt-outside-raw-inside", label: coreSymptomLabel("burnt-outside-raw-inside") },
+  { id: "pale", label: coreSymptomLabel("pale") },
+  { id: "blowout", label: coreSymptomLabel("blowout") },
+  { id: "large-holes", label: coreSymptomLabel("large-holes") },
+  { id: "too-wet", label: coreSymptomLabel("too-wet") },
+  { id: "thick-crust", label: coreSymptomLabel("thick-crust") },
+  { id: "sour-smell", label: coreSymptomLabel("sour-smell") },
   { id: "spread-flat-disc", label: "오븐에 넣을 때 반죽이 옆으로 퍼져 팬케이크처럼 됨" },
   { id: "bland-flavor", label: "신맛/풍미가 거의 안 남" },
 ];
@@ -58,45 +49,45 @@ const CAUSES: Cause[] = [
   },
   {
     id: "underproof",
-    name: core("underproof"),
+    name: coreCauseName("underproof"),
     why: "스타터는 정상이어도 1차·2차 발효 시간이 부족하면 가스가 덜 차 부피가 안 나고 속이 조밀·떡지게 됩니다.",
     action:
       "손가락으로 눌렀을 때 자국이 서서히(3~5초) 돌아올 때까지 발효 시간을 늘려 보세요(poke test).",
   },
   {
     id: "overproof",
-    name: core("overproof"),
+    name: coreCauseName("overproof"),
     why: "발효가 과하게 진행되면 반죽이 힘을 잃어 굽는 중 주저앉고, 기공이 커지며 신맛이 강해집니다.",
     action:
       "손가락 자국이 거의 안 돌아오고 반죽이 눌렸을 때 살짝 무너지는 느낌이면 바로 구워 보세요.",
   },
   {
     id: "cold-environment",
-    name: core("cold-environment"),
+    name: coreCauseName("cold-environment"),
     why: "반죽·실내 온도가 낮으면 자연 발효 속도가 크게 느려져 같은 시간에 덜 부풉니다.",
     action: "오븐 발효 기능이나 26~28℃ 환경에서 발효시켜 보세요.",
   },
   {
     id: "weak-gluten",
-    name: core("weak-gluten"),
+    name: coreCauseName("weak-gluten"),
     why: "사워도우는 대개 고수분 반죽이라 스트레치&폴드 등으로 글루텐을 충분히 세우지 않으면 가스를 가두지 못해 주저앉고 옆으로 퍼집니다.",
     action: "벌크 발효 중 30분 간격으로 스트레치&폴드를 3~4회 반복해 반죽 장력을 세워 보세요.",
   },
   {
     id: "excess-hydration",
-    name: core("excess-hydration"),
+    name: coreCauseName("excess-hydration"),
     why: "레시피 대비 수분이 많으면(특히 초보자가 고수분 레시피를 그대로 따라할 때) 반죽이 흘러내려 성형이 무너지고 굽는 중 옆으로 퍼집니다.",
     action: "수분을 5~10% 낮추거나, 반죽 강도가 오를 때까지 폴딩 횟수를 늘려 보세요.",
   },
   {
     id: "oven-too-hot",
-    name: core("oven-too-hot"),
+    name: coreCauseName("oven-too-hot"),
     why: "겉면이 속보다 훨씬 빨리 익어 겉은 타거나 두꺼워지는 동안 속까지 열이 전달되지 못합니다.",
     action: "오븐 온도를 레시피보다 10~15℃ 낮추고 굽는 중간에 은박지로 덮어 보세요.",
   },
   {
     id: "oven-too-cool",
-    name: core("oven-too-cool"),
+    name: coreCauseName("oven-too-cool"),
     why: "열이 부족하거나 너무 일찍 꺼내면(내부 온도 미달) 속이 설익어 떡지고 색이 약해집니다.",
     action:
       "내부 온도가 최소 205~210°F(사워도우는 일반 식빵보다 조금 더 높게)에 도달할 때까지 굽고, 완전히 식을 때까지(최소 1시간) 자르지 마세요.",

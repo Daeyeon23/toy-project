@@ -29,6 +29,20 @@ export const CORE_SYMPTOMS: Array<{ id: string; label: string }> = [
   { id: "sour-smell", label: "신맛 / 이상한 냄새" },
 ];
 
+/** CORE 원인 id의 정본 이름을 돌려준다 — 빵별 파일이 이 이름을 그대로 재사용해 충돌을 막는다. */
+export function coreCauseName(id: string): string {
+  const cause = CORE_CAUSES.find((c) => c.id === id);
+  if (!cause) throw new Error(`Unknown CORE cause id: ${id}`);
+  return cause.name;
+}
+
+/** CORE 증상 id의 정본 라벨을 돌려준다. */
+export function coreSymptomLabel(id: string): string {
+  const symptom = CORE_SYMPTOMS.find((s) => s.id === id);
+  if (!symptom) throw new Error(`Unknown CORE symptom id: ${id}`);
+  return symptom.label;
+}
+
 /**
  * 여러 빵 KB에 걸쳐 등장하는 (id, label) 쌍을 모았을 때, 같은 id가 서로 다른 라벨로
  * 두 번 정의되면 충돌로 보고한다. 빵 경계 격리 불변 규칙의 데이터 전제 — 25개 매트릭스가

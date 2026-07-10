@@ -1,5 +1,9 @@
 import { WHITE_LOAF } from "@/lib/bread-doctor/knowledge/white-loaf";
 import { SOURDOUGH } from "@/lib/bread-doctor/knowledge/sourdough";
+import { BAGUETTE } from "@/lib/bread-doctor/knowledge/baguette";
+import { CIABATTA } from "@/lib/bread-doctor/knowledge/ciabatta";
+import { FOCACCIA } from "@/lib/bread-doctor/knowledge/focaccia";
+import { PAIN_DE_CAMPAGNE } from "@/lib/bread-doctor/knowledge/pain-de-campagne";
 import type { BreadKnowledge } from "@/types/bread-doctor";
 
 /**
@@ -9,6 +13,10 @@ import type { BreadKnowledge } from "@/types/bread-doctor";
 export const BREAD_KNOWLEDGE: Record<string, BreadKnowledge> = {
   "white-loaf": WHITE_LOAF,
   sourdough: SOURDOUGH,
+  baguette: BAGUETTE,
+  ciabatta: CIABATTA,
+  focaccia: FOCACCIA,
+  "pain-de-campagne": PAIN_DE_CAMPAGNE,
 };
 
 /** 등록되지 않은 빵 id는 프로그래밍 오류(설정 누락)이므로 즉시 던진다. */
