@@ -80,6 +80,16 @@ applied: not-yet
 
 ---
 category: code-review
+applied: discarded
+---
+## 매트릭스가 "margin 1점, 약하게 peaked"라고 명시한 조합을 테스트 fixture로 쓰면 판별 질문이 튀어나온다
+
+**상황**: Task 7에서 콘브레드 테스트에 매트릭스의 조합 C(`tough-rubbery`+`dry-crumbly`+`large-holes`, quick-overmixed 4 vs quick-under-hydrated 3)를 그대로 썼다가 `diagnose()`가 `kind:"result"`가 아니라 `kind:"question"`을 반환해 실패했다. 매트릭스 결론에 이미 "margin 1점이라 완전히 뾰족하진 않다"고 적혀 있었는데, PROXIMITY_THRESHOLD=1이라 그 조합엔 실제로 판별 질문이 정의돼 있어 엔진이 의도대로 질문을 먼저 반환한 것 — 버그가 아니라 설계대로 동작.
+**판단**: 그 조합을 테스트에서 빼고, 같은 매트릭스의 압도적 조합(`off-taste-soapy`+`large-holes`, 4 vs 1)으로 교체했다. "1순위 원인 재현" 테스트의 fixture는 매트릭스 결론에서 **압도적(margin 2점 이상)**이라고 명시한 조합만 골라야 한다.
+**다시 마주칠 가능성**: 낮음 — 남은 데이터 Task(8, 9)에서 fixture를 고를 때 매트릭스의 "정직한 반례"/"근접" 표시가 붙은 조합을 피하기만 하면 되는, 이미 인지한 패턴이라 규칙 승격 없이 바로 적용 가능.
+
+---
+category: code-review
 applied: rule
 ---
 ## 매트릭스 md의 CORE/공유 코드 라벨을 그대로 옮기면 안 됨 — 정본 함수로 강제해야 충돌 검사가 작동
