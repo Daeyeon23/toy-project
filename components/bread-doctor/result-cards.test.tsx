@@ -55,7 +55,7 @@ describe("ResultCards", () => {
 
     expect(
       screen.getByText(
-        "단정적 진단이 아니라 일반적 제빵 상식 기반의 가능성 있는 원인입니다.",
+        "단정적 진단이 아니라 일반적 베이킹 상식 기반의 가능성 있는 원인입니다.",
       ),
     ).toBeInTheDocument();
   });
@@ -91,7 +91,7 @@ describe("ResultCards", () => {
     expect(onRestart).toHaveBeenCalledTimes(1);
   });
 
-  it("빵 다시 고르기 버튼 클릭 시 onChangeBread가 호출된다", async () => {
+  it("다시 고르기 버튼 클릭 시 onChangeBread가 호출된다", async () => {
     const onChangeBread = vi.fn();
     render(
       <ResultCards
@@ -102,7 +102,7 @@ describe("ResultCards", () => {
       />,
     );
 
-    await userEvent.click(screen.getByRole("button", { name: /빵 다시 고르기/ }));
+    await userEvent.click(screen.getByRole("button", { name: /다시 고르기/ }));
 
     expect(onChangeBread).toHaveBeenCalledTimes(1);
   });

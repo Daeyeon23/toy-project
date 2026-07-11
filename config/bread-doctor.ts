@@ -2,14 +2,14 @@ import type { BreadCategory, BreadType } from "@/types/bread-doctor";
 
 /** 빵 선택 화면의 카테고리 섹션 — matrices/_taxonomy.md의 리서치 배치와 1:1 대응한다. */
 export const BREAD_CATEGORIES: BreadCategory[] = [
-  { id: "lean-doughs", label: "식빵 · 린도우", order: 1 },
-  { id: "sourdough-rye", label: "사워도우 · 호밀", order: 2 },
-  { id: "laminated", label: "라미네이션", order: 3 },
-  { id: "enriched", label: "enriched 단맛 반죽", order: 4 },
-  { id: "chemical-leavened", label: "화학 팽창", order: 5 },
-  { id: "leavened-flatbread", label: "발효 플랫브레드", order: 6 },
-  { id: "unleavened-flatbread", label: "무발효 플랫브레드", order: 7 },
-  { id: "boiled", label: "보일링", order: 8 },
+  { id: "lean-doughs", label: "식빵 · 린도우", order: 1, domain: "bread" },
+  { id: "sourdough-rye", label: "사워도우 · 호밀", order: 2, domain: "bread" },
+  { id: "laminated", label: "라미네이션", order: 3, domain: "bread" },
+  { id: "enriched", label: "enriched 단맛 반죽", order: 4, domain: "bread" },
+  { id: "chemical-leavened", label: "화학 팽창", order: 5, domain: "bread" },
+  { id: "leavened-flatbread", label: "발효 플랫브레드", order: 6, domain: "bread" },
+  { id: "unleavened-flatbread", label: "무발효 플랫브레드", order: 7, domain: "bread" },
+  { id: "boiled", label: "보일링", order: 8, domain: "bread" },
 ];
 
 export const BREAD_TYPES: BreadType[] = [

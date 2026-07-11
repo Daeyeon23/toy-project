@@ -36,7 +36,7 @@ describe("BreadTypePicker", () => {
     render(<BreadTypePicker breadTypes={BREAD_TYPES} onSelect={vi.fn()} />);
 
     await userEvent.type(
-      screen.getByPlaceholderText("빵 이름으로 검색 (예: 치아바타)"),
+      screen.getByPlaceholderText("베이커리 품목 이름으로 검색 (예: 치아바타)"),
       "치아",
     );
 
@@ -49,7 +49,7 @@ describe("BreadTypePicker", () => {
     render(<BreadTypePicker breadTypes={BREAD_TYPES} onSelect={vi.fn()} />);
 
     await userEvent.type(
-      screen.getByPlaceholderText("빵 이름으로 검색 (예: 치아바타)"),
+      screen.getByPlaceholderText("베이커리 품목 이름으로 검색 (예: 치아바타)"),
       "머핀",
     );
 
@@ -60,10 +60,10 @@ describe("BreadTypePicker", () => {
   it("매칭되는 빵이 없는 검색어 → 안내가 표시되고, 지우면 25종 전체가 복원된다", async () => {
     render(<BreadTypePicker breadTypes={BREAD_TYPES} onSelect={vi.fn()} />);
 
-    const searchInput = screen.getByPlaceholderText("빵 이름으로 검색 (예: 치아바타)");
+    const searchInput = screen.getByPlaceholderText("베이커리 품목 이름으로 검색 (예: 치아바타)");
     await userEvent.type(searchInput, "우주선");
 
-    expect(screen.getByText("일치하는 빵이 없어요")).toBeInTheDocument();
+    expect(screen.getByText("일치하는 품목이 없어요")).toBeInTheDocument();
 
     await userEvent.clear(searchInput);
 

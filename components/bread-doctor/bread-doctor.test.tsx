@@ -142,7 +142,7 @@ describe("BreadDoctor", () => {
 
     await userEvent.click(screen.getByRole("button", { name: "식빵" }));
     await userEvent.click(screen.getByLabelText("전혀/거의 안 부풂"));
-    await userEvent.click(screen.getByRole("button", { name: /빵 다시 고르기/ }));
+    await userEvent.click(screen.getByRole("button", { name: /다시 고르기/ }));
 
     expect(
       screen.queryByRole("heading", { name: "증상을 선택해 주세요" }),
@@ -163,7 +163,7 @@ describe("BreadDoctor", () => {
     await userEvent.click(screen.getByRole("button", { name: /진단하기/ }));
     expect(screen.getByText("과발효")).toBeInTheDocument();
 
-    await userEvent.click(screen.getByRole("button", { name: /빵 다시 고르기/ }));
+    await userEvent.click(screen.getByRole("button", { name: /다시 고르기/ }));
 
     expect(screen.queryByText("과발효")).not.toBeInTheDocument();
     expect(screen.getByRole("button", { name: "식빵" })).toBeInTheDocument();

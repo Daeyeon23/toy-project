@@ -7,11 +7,12 @@ export interface BreadType {
   category: string;
 }
 
-/** 빵 선택 화면의 카테고리 섹션 — 순서·라벨. */
+/** 빵 선택 화면의 카테고리 섹션 — 순서·라벨·도메인(빵/제과류). */
 export interface BreadCategory {
   id: string;
   label: string;
   order: number;
+  domain: "bread" | "pastry";
 }
 
 export interface Symptom {

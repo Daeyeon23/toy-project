@@ -8,7 +8,7 @@ const oxanium = Oxanium({subsets:['latin'],variable:'--font-sans'});
 
 export const metadata: Metadata = {
   title: "브레드 닥터",
-  description: "증상으로 식빵 실패 원인을 진단하는 도구",
+  description: "증상으로 빵·제과류 실패 원인을 진단하는 도구",
 };
 
 export default function RootLayout({

@@ -7,7 +7,7 @@ import { DiscriminatorQuestionCard } from "@/components/bread-doctor/discriminat
 import { ResultCards } from "@/components/bread-doctor/result-cards";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { InfoIcon, LayoutGridIcon, WheatIcon } from "lucide-react";
+import { InfoIcon, LayoutGridIcon } from "lucide-react";
 
 export function BreadDoctor() {
   const diagnosis = useDiagnosis();
@@ -44,8 +44,8 @@ export function BreadDoctor() {
         <section aria-label="증상 선택" className="flex flex-col gap-4">
           <h2 className="text-lg font-semibold">증상을 선택해 주세요</h2>
           <Button variant="outline" onClick={diagnosis.changeBread}>
-            <WheatIcon data-icon="inline-start" />
-            빵 다시 고르기
+            <LayoutGridIcon data-icon="inline-start" />
+            다시 고르기
           </Button>
           <SymptomChecklist
             symptoms={diagnosis.symptoms}

@@ -4,7 +4,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import type { CauseResult, Strength } from "@/types/bread-doctor";
-import { RotateCcwIcon, WheatIcon } from "lucide-react";
+import { LayoutGridIcon, RotateCcwIcon } from "lucide-react";
 
 const STRENGTH_LABEL: Record<Strength, string> = {
   high: "가능성 높음",
@@ -38,7 +38,7 @@ export function ResultCards({
 
       <Alert>
         <AlertDescription>
-          단정적 진단이 아니라 일반적 제빵 상식 기반의 가능성 있는 원인입니다.
+          단정적 진단이 아니라 일반적 베이킹 상식 기반의 가능성 있는 원인입니다.
         </AlertDescription>
       </Alert>
 
@@ -85,8 +85,8 @@ export function ResultCards({
           증상 바꿔 다시 진단
         </Button>
         <Button variant="outline" onClick={onChangeBread}>
-          <WheatIcon data-icon="inline-start" />
-          빵 다시 고르기
+          <LayoutGridIcon data-icon="inline-start" />
+          다시 고르기
         </Button>
       </div>
     </div>
