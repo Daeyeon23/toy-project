@@ -411,10 +411,10 @@ None — 정적 진단 지식 기반, 외부 자원·네트워크 없음.
   - `lib/bread-doctor/knowledge/{financier,brownie,tart,macaron}.ts` (+ `knowledge-base.ts` 인덱스 등록)
   - `knowledge/pastry-pilot-a.test.ts`
 - **수용 기준**:
-  - [ ] 각 품목의 매트릭스 대표 PEAKED 조합 → `diagnose`로 기대 1순위 원인이 재현된다 (품목당 최소 1건)
-  - [ ] 마카롱으로 진단 → 결과 원인이 마카롱 원인 세트에서만 나온다 (다른 품목 원인 미혼입, 품목 경계 격리)
-  - [ ] 4종 모두 `associations`가 자기 품목 원인·증상만 참조한다 (`knowledge-base.test.ts` 정합성 통과)
-  - [ ] 피커에 4개 신규 카테고리·카드가 표시되고, 선택 시 그 품목의 증상 체크리스트로 이동한다
+  - [x] 각 품목의 매트릭스 대표 PEAKED 조합 → `diagnose`로 기대 1순위 원인이 재현된다 (품목당 최소 1건)
+  - [x] 마카롱으로 진단 → 결과 원인이 마카롱 원인 세트에서만 나온다 (다른 품목 원인 미혼입, 품목 경계 격리)
+  - [x] 4종 모두 `associations`가 자기 품목 원인·증상만 참조한다 (`knowledge-base.test.ts` 정합성 통과)
+  - [x] 피커에 4개 신규 카테고리·카드가 표시되고, 선택 시 그 품목의 증상 체크리스트로 이동한다
 - **검증**: `bun run test -- "pastry-pilot-a|knowledge-base"` · `bun run build`
 
 ### Task 15: 데이터 — 파일럿 B: 붓세·시폰케이크·머핀(퀵브레드)·슈 (이름 충돌 검증 포함)

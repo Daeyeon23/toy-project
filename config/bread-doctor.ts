@@ -10,6 +10,11 @@ export const BREAD_CATEGORIES: BreadCategory[] = [
   { id: "leavened-flatbread", label: "발효 플랫브레드", order: 6, domain: "bread" },
   { id: "unleavened-flatbread", label: "무발효 플랫브레드", order: 7, domain: "bread" },
   { id: "boiled", label: "보일링", order: 8, domain: "bread" },
+
+  { id: "emulsified-batter", label: "유화 배터", order: 9, domain: "pastry" },
+  { id: "melted-butter-creaming", label: "멜팅버터 · 크리밍", order: 10, domain: "pastry" },
+  { id: "rubbed-dough", label: "러빙", order: 11, domain: "pastry" },
+  { id: "meringue-foam", label: "머랭 거품", order: 12, domain: "pastry" },
 ];
 
 export const BREAD_TYPES: BreadType[] = [
@@ -45,6 +50,11 @@ export const BREAD_TYPES: BreadType[] = [
 
   { id: "bagel", name: "베이글", status: "available", category: "boiled" },
   { id: "pretzel", name: "프레첼", status: "available", category: "boiled" },
+
+  { id: "financier", name: "휘낭시에", status: "available", category: "emulsified-batter" },
+  { id: "brownie", name: "브라우니", status: "available", category: "melted-butter-creaming" },
+  { id: "tart", name: "타르트", status: "available", category: "rubbed-dough" },
+  { id: "macaron", name: "마카롱", status: "available", category: "meringue-foam" },
 ];
 
 /** 상위 두 원인 점수 차가 이 값 이하면 근접으로 판정한다. */

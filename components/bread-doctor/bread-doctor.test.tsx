@@ -14,6 +14,18 @@ describe("BreadDoctor", () => {
     ).toBeInTheDocument();
   });
 
+  it("Scenario 0-A': 마카롱 선택 → 머랭 거품 증상이 표시되고 식빵 전용 증상은 안 보인다", async () => {
+    render(<BreadDoctor />);
+
+    await userEvent.click(screen.getByRole("button", { name: "마카롱" }));
+
+    expect(screen.getByText("마카롱 기준")).toBeInTheDocument();
+    expect(screen.getByLabelText("꼬끄에 삐에(다리)가 안 생김")).toBeInTheDocument();
+    expect(
+      screen.queryByLabelText("옆구리·표면이 터짐"),
+    ).not.toBeInTheDocument();
+  });
+
   it("Scenario 0-A: 크루아상 선택 → 라미네이션 증상이 표시되고 식빵 전용 증상은 안 보인다", async () => {
     render(<BreadDoctor />);
 
