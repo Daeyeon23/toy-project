@@ -24,7 +24,7 @@ test("식빵 선택 → 증상 3개 선택 → 진단 → 1순위 발효 부족 
   // 불변 규칙: 면책 고지 + 범위 고지가 결과 화면에 표시된다 (선택 빵 이름 기준)
   await expect(
     page.getByText(
-      "단정적 진단이 아니라 일반적 제빵 상식 기반의 가능성 있는 원인입니다.",
+      "단정적 진단이 아니라 일반적 베이킹 상식 기반의 가능성 있는 원인입니다.",
     ),
   ).toBeVisible();
   await expect(page.getByText("식빵 기준")).toBeVisible();
@@ -68,7 +68,7 @@ test("크루아상 선택 → 라미네이션 증상 진단 → 크루아상 고
   await expect(page.getByText("크루아상 기준")).toBeVisible();
   await expect(
     page.getByText(
-      "단정적 진단이 아니라 일반적 제빵 상식 기반의 가능성 있는 원인입니다.",
+      "단정적 진단이 아니라 일반적 베이킹 상식 기반의 가능성 있는 원인입니다.",
     ),
   ).toBeVisible();
 
@@ -83,6 +83,66 @@ test("크루아상 선택 → 라미네이션 증상 진단 → 크루아상 고
 
   await page.screenshot({
     path: "artifacts/bread-doctor/evidence/task-11.png",
+    fullPage: true,
+  });
+});
+
+test("식빵 진단 후 다시 고르기 → 마카롱 선택 (빵→제과류 도메인 교차) → 마카롱 고유 원인만 표시된다", async ({
+  page,
+}) => {
+  const externalRequests: string[] = [];
+  page.on("request", (request) => {
+    const url = new URL(request.url());
+    if (url.hostname !== "localhost" && url.hostname !== "127.0.0.1") {
+      externalRequests.push(request.url());
+    }
+  });
+
+  await page.goto("/");
+  await page.getByRole("button", { name: "식빵" }).click();
+
+  await page.getByLabel("전혀/거의 안 부풂").click();
+  await page.getByLabel("속이 떡짐 / 질음").click();
+  await page.getByLabel("옆구리·표면이 터짐").click();
+  await page.getByRole("button", { name: /진단하기/ }).click();
+
+  await expect(page.getByText("발효 부족")).toBeVisible();
+
+  // Scenario 0-C: 결과 화면에서 "다시 고르기" → 품목 선택 화면으로 돌아가고, 빵→제과류로 바꿔도
+  // 이전 증상·결과가 남지 않는다 (품목 경계를 넘는 재선택)
+  await page.getByRole("button", { name: /다시 고르기/ }).click();
+  await page.getByRole("button", { name: "마카롱" }).click();
+
+  await expect(page.getByText("식빵 기준")).not.toBeVisible();
+  await expect(page.getByText("발효 부족")).not.toBeVisible();
+  await expect(page.getByText("마카롱 기준")).toBeVisible();
+
+  await page.getByLabel("납작하게 퍼짐(원형 유지 안 됨)").click();
+  await page.getByLabel("꼬끄에 삐에(다리)가 안 생김").click();
+  await page.getByRole("button", { name: /진단하기/ }).click();
+
+  // 마카롱 고유 원인(마카로나주 과다)만 표시된다 — 식빵 원인과 안 섞임 (품목 경계 격리가 도메인을 넘어도 유지)
+  await expect(page.getByText("마카로나주가 과해 반죽이 묽어짐")).toBeVisible();
+  await expect(page.getByText("이스트 문제")).not.toBeVisible();
+  await expect(page.getByText("발효 부족")).not.toBeVisible();
+
+  // 불변 규칙: 면책 고지(베이킹 상식 문구) + 범위 고지가 마카롱 기준으로 표시된다
+  await expect(
+    page.getByText(
+      "단정적 진단이 아니라 일반적 베이킹 상식 기반의 가능성 있는 원인입니다.",
+    ),
+  ).toBeVisible();
+  await expect(page.getByText("마카롱 기준")).toBeVisible();
+
+  // 불변 규칙: 원시 점수·퍼센트 숫자가 어디에도 없다
+  const bodyText = await page.locator("body").innerText();
+  expect(bodyText).not.toMatch(/%/);
+
+  // 불변 규칙: 클라이언트 완결 — 외부 네트워크 요청 없음
+  expect(externalRequests).toEqual([]);
+
+  await page.screenshot({
+    path: "artifacts/bread-doctor/evidence/task-16.png",
     fullPage: true,
   });
 });
