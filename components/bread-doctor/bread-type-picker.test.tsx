@@ -5,7 +5,7 @@ import { BreadTypePicker } from "@/components/bread-doctor/bread-type-picker";
 import { BREAD_TYPES } from "@/config/bread-doctor";
 
 describe("BreadTypePicker", () => {
-  it("25개 빵 카드가 카테고리 그룹 헤더 아래 묶여 표시된다", () => {
+  it("전체 품목 카드가 카테고리 그룹 헤더 아래 묶여 표시된다", () => {
     render(<BreadTypePicker breadTypes={BREAD_TYPES} onSelect={vi.fn()} />);
 
     expect(screen.getAllByRole("button").length).toBe(BREAD_TYPES.length);
@@ -59,7 +59,7 @@ describe("BreadTypePicker", () => {
     expect(screen.getByText("발효 플랫브레드")).toBeInTheDocument();
   });
 
-  it("매칭되는 빵이 없는 검색어 → 안내가 표시되고, 지우면 25종 전체가 복원된다", async () => {
+  it("매칭되는 빵이 없는 검색어 → 안내가 표시되고, 지우면 전체 품목이 복원된다", async () => {
     render(<BreadTypePicker breadTypes={BREAD_TYPES} onSelect={vi.fn()} />);
 
     const searchInput = screen.getByPlaceholderText("베이커리 품목 이름으로 검색 (예: 치아바타)");

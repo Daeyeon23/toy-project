@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group";
 import {
@@ -11,7 +11,7 @@ import {
   EmptyTitle,
 } from "@/components/ui/empty";
 import { BREAD_CATEGORIES } from "@/config/bread-doctor";
-import type { BreadType } from "@/types/bread-doctor";
+import type { BreadCategory, BreadType } from "@/types/bread-doctor";
 import {
   ChevronRightIcon,
   CookieIcon,
@@ -19,7 +19,6 @@ import {
   SearchXIcon,
   WheatIcon,
 } from "lucide-react";
-import type { BreadCategory } from "@/types/bread-doctor";
 
 const DOMAIN_ICON: Record<BreadCategory["domain"], typeof WheatIcon> = {
   bread: WheatIcon,
@@ -40,13 +39,17 @@ export function BreadTypePicker({ breadTypes, onSelect }: BreadTypePickerProps) 
       )
     : breadTypes;
 
-  const categories = BREAD_CATEGORIES.slice()
-    .sort((a, b) => a.order - b.order)
-    .map((category) => ({
-      ...category,
-      breadTypes: visibleBreadTypes.filter((b) => b.category === category.id),
-    }))
-    .filter((category) => category.breadTypes.length > 0);
+  const categories = useMemo(
+    () =>
+      BREAD_CATEGORIES.slice()
+        .sort((a, b) => a.order - b.order)
+        .map((category) => ({
+          ...category,
+          breadTypes: visibleBreadTypes.filter((b) => b.category === category.id),
+        }))
+        .filter((category) => category.breadTypes.length > 0),
+    [visibleBreadTypes],
+  );
 
   return (
     <div className="flex flex-col gap-6">
