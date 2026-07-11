@@ -93,3 +93,54 @@ SynonymEntry  { symptomId: string; terms: string[] }
 | B8 보일링 계열 | `bagel`, `pretzel` | 보일링·알칼리 용액 중심 |
 
 기존 `symptom-cause-matrix.md`(식빵)는 그대로 유지하며 이동하지 않는다(plan.md/idea.md/knowledge-base.ts에서 참조 중).
+
+---
+
+## v3 — 제과류 파일럿 8종 (카테고리당 대표 1종)
+
+> `artifacts/bread-doctor/idea-pastry.md`·`spec.md` v3 참고. 이스트 발효가 없는 품목이 대부분이라
+> CORE 발효 코드(`yeast-dead`/`underproof`/`overproof`/`starter-*`)는 거의 재사용되지 않는다.
+> `oven-too-hot`/`oven-too-cool`/`weak-gluten`/`excess-hydration`/`excess-salt`는 반죽·배터 기반
+> 품목(타르트·머핀·슈)에서 여전히 유효해 재사용 우선.
+
+### 신규 카테고리·접두사
+
+| 카테고리 (domain: pastry) | 접두사 | 대표 품목 (id) | 실패축 |
+|---|---|---|---|
+| 유화 배터 | `fin-` | `financier`(휘낭시에) | 뵈르 노아제트 갈색화 정도·휴지·팬 전도열 |
+| 멜팅버터·크리밍 | `brn-` | `brownie`(브라우니) | 초콜릿 유화·굽기 정도(퍼지 vs 케이키) |
+| 러빙 | `tart-` | `tart`(타르트) | 글루텐 과다·오그라듦·눅눅한 바닥 |
+| 머랭 거품 | `mac-` | `macaron`(마카롱) | 머랭 안정성·마카로나주·삐에/할로우 쉘 |
+| 전란 거품 스펀지 | `spg-` | `bouchee`(붓세) | 전란 기포 구조·굽기 후 꺼짐 |
+| 분리교반 | `chif-` | `chiffon-cake`(시폰케이크) | 노른자 배터 유화·머랭 폴딩·뒤집어 식히기 |
+| 화학팽창 머핀 | `qmuf-` | `quick-muffin`(머핀(퀵브레드)) | 과교반(터널링)·BP 비율 — 기존 빵의 `quick-` 접두사와 의도적으로 다른 문자열 |
+| 스팀 팽창 | `choux-` | `choux`(슈) | 익반죽 호화·오븐 초반 고온·수분 증발 |
+
+### 인용 출처 — 제과류 추가 허용 목록
+
+기존 허용 목록(King Arthur Baking / Serious Eats / America's Test Kitchen / 참고 도서)에 더해:
+- Serious Eats — Stella Parks(BraveTart)의 제과 베이킹 사이언스 기사 (브라우니·쿠키·머랭 계열)
+- King Arthur Baking의 마카롱·타르트·슈 troubleshooting 가이드
+- 위 출처로도 확인 불가한 주장은 기존 규칙대로 "출처 미확인 — 일반 상식(제과)"로 표기
+
+### 리서치 로스터 & 배치 (파일럿 8종 = 카테고리당 1종)
+
+| 배치 | 품목 (id) | 비고 |
+|---|---|---|
+| P1 | `financier`, `brownie`, `tart`, `macaron` | Task 14 — CORE 오븐 온도 코드 재사용 비중 있음(타르트) |
+| P2 | `bouchee`, `chiffon-cake`, `quick-muffin`, `choux` | Task 15 — `quick-muffin`은 잉글리시 머핀과 이름이 겹치므로 카테고리 라벨로 구분(0-E) |
+
+### 크로스 네임스페이스 충돌 검사 기록 (Task 12)
+
+`.claude/rules/bread-kb-code-namespace.md` 규율에 따라, 8개 매트릭스의 신규 코드(67개)를 기존
+`lib/bread-doctor/knowledge/*.ts`의 전체 원인·증상 id(161개)와 문자열 대조했다:
+
+```bash
+comm -12 <(grep -ohE '"[a-z][a-z0-9-]*"' lib/bread-doctor/knowledge/*.ts | grep -v '\.test\.ts' | sed 's/"//g' | sort -u) \
+         <(grep -ohE '`(fin|brn|tart|mac|spg|chif|qmuf|choux)-[a-z-]+`' artifacts/bread-doctor/matrices/{financier,brownie,tart,macaron,bouchee,chiffon-cake,quick-muffin,choux}.md | tr -d '`' | sort -u)
+# → 결과: 빈 집합 (충돌 0건)
+```
+
+**`quick-muffin`(qmuf-) vs 기존 빵의 `quick-`(스콘/소다빵/콘브레드) 접두사**도 별도로 대조 —
+`quick-leavener-dead`/`quick-overmixed`/`quick-under-hydrated` 등 기존 6개 코드와 `qmuf-` 8개
+코드는 접두사 문자열부터 다르므로 충돌 없음.

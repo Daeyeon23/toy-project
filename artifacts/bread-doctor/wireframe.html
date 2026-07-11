@@ -213,7 +213,7 @@
 
 <nav class="flex items-center gap-4 px-6 py-2">
   <span class="text-xs" style="color:var(--w-muted)">wireframe</span>
-  <button id="nav-0" onclick="show(0)" class="px-2 py-1">빵 선택</button>
+  <button id="nav-0" onclick="show(0)" class="px-2 py-1">품목 선택</button>
   <button id="nav-1" onclick="show(1)" class="px-2 py-1">진단</button>
   <button id="nav-2" onclick="show(2)" class="px-2 py-1">증상 검색</button>
   <button id="nav-3" onclick="show(3)" class="px-2 py-1">판별 질문</button>
@@ -224,20 +224,20 @@
   </div>
 </nav>
 
-<!-- ══════════════ 화면 0: 빵 종류 선택 (25종 · 8개 카테고리) ══════════════ -->
-<div id="screen-0" class="screen" data-scenario="scenario-0, scenario-0-b">
+<!-- ══════════════ 화면 0: 베이커리 품목 선택 (33종 · 16개 카테고리) ══════════════ -->
+<div id="screen-0" class="screen" data-scenario="scenario-0, scenario-0-b, scenario-0-e">
   <div class="screen-content @container max-w-2xl mx-auto p-6">
 
     <div class="flex items-start justify-between gap-3 mb-1">
       <h2 class="text-xl font-bold" style="color:var(--w-text)">🍞 브레드 닥터</h2>
-      <span class="w-badge"><i data-lucide="layout-grid" style="width:12px;height:12px"></i>25종</span>
+      <span class="w-badge"><i data-lucide="layout-grid" style="width:12px;height:12px"></i>33종</span>
     </div>
-    <p class="text-sm mb-4" style="color:var(--w-muted)">어떤 빵을 굽다 실패했나요? 종류를 고르면 그 빵에 맞는 증상 목록으로 진단합니다.</p>
+    <p class="text-sm mb-4" style="color:var(--w-muted)">어떤 빵·제과류를 굽다 실패했나요? 종류를 고르면 그 품목에 맞는 증상 목록으로 진단합니다.</p>
 
-    <!-- 빵 이름 검색 (scenario-0-b 기본 상태: 빈 검색어 → 전체 노출) -->
+    <!-- 품목 이름 검색 (scenario-0-b 기본 상태: 빈 검색어 → 전체 노출) -->
     <div class="w-search mb-5">
       <i data-lucide="search" style="width:16px;height:16px;color:var(--w-muted)"></i>
-      <input type="text" placeholder="빵 이름으로 검색 (예: 치아바타)" />
+      <input type="text" placeholder="베이커리 품목 이름으로 검색 (예: 치아바타)" />
     </div>
 
     <!-- 카테고리 1: 식빵·린도우 -->
@@ -392,7 +392,7 @@
 
     <!-- 카테고리 8: 보일링 -->
     <span class="w-label">보일링 (2)</span>
-    <div class="grid grid-cols-1 @md:grid-cols-2 gap-3">
+    <div class="grid grid-cols-1 @md:grid-cols-2 gap-3 mb-5">
       <div class="w-typecard" data-selectable="true">
         <span class="w-ic"><i data-lucide="donut" style="width:20px;height:20px"></i></span>
         <span class="flex-1 font-bold" style="color:var(--w-text)">베이글</span>
@@ -401,6 +401,88 @@
       <div class="w-typecard" data-selectable="true">
         <span class="w-ic"><i data-lucide="donut" style="width:20px;height:20px"></i></span>
         <span class="flex-1 font-bold" style="color:var(--w-text)">프레첼</span>
+        <i data-lucide="chevron-right" style="width:18px;height:18px;color:var(--w-muted)"></i>
+      </div>
+    </div>
+
+    <p class="text-xs font-bold uppercase tracking-wide mb-3" style="color:var(--w-muted)">— 제과류 (파일럿 8종, 카테고리당 1종) —</p>
+
+    <!-- 카테고리 9: 유화 배터 (구움과자) -->
+    <span class="w-label">유화 배터 (1)</span>
+    <div class="grid grid-cols-1 @md:grid-cols-2 gap-3 mb-5">
+      <div class="w-typecard" data-selectable="true">
+        <span class="w-ic"><i data-lucide="cookie" style="width:20px;height:20px"></i></span>
+        <span class="flex-1 font-bold" style="color:var(--w-text)">휘낭시에</span>
+        <i data-lucide="chevron-right" style="width:18px;height:18px;color:var(--w-muted)"></i>
+      </div>
+    </div>
+
+    <!-- 카테고리 10: 멜팅버터·크리밍 -->
+    <span class="w-label">멜팅버터 · 크리밍 (1)</span>
+    <div class="grid grid-cols-1 @md:grid-cols-2 gap-3 mb-5">
+      <div class="w-typecard" data-selectable="true">
+        <span class="w-ic"><i data-lucide="cake" style="width:20px;height:20px"></i></span>
+        <span class="flex-1 font-bold" style="color:var(--w-text)">브라우니</span>
+        <i data-lucide="chevron-right" style="width:18px;height:18px;color:var(--w-muted)"></i>
+      </div>
+    </div>
+
+    <!-- 카테고리 11: 러빙 -->
+    <span class="w-label">러빙 (1)</span>
+    <div class="grid grid-cols-1 @md:grid-cols-2 gap-3 mb-5">
+      <div class="w-typecard" data-selectable="true">
+        <span class="w-ic"><i data-lucide="layers" style="width:20px;height:20px"></i></span>
+        <span class="flex-1 font-bold" style="color:var(--w-text)">타르트</span>
+        <i data-lucide="chevron-right" style="width:18px;height:18px;color:var(--w-muted)"></i>
+      </div>
+    </div>
+
+    <!-- 카테고리 12: 머랭 거품 -->
+    <span class="w-label">머랭 거품 (1)</span>
+    <div class="grid grid-cols-1 @md:grid-cols-2 gap-3 mb-5">
+      <div class="w-typecard" data-selectable="true" onclick="show(1)">
+        <span class="w-ic"><i data-lucide="cloud" style="width:20px;height:20px"></i></span>
+        <span class="flex-1 font-bold" style="color:var(--w-text)">마카롱</span>
+        <i data-lucide="chevron-right" style="width:18px;height:18px;color:var(--w-muted)"></i>
+      </div>
+    </div>
+
+    <!-- 카테고리 13: 전란 거품 스펀지 -->
+    <span class="w-label">전란 거품 스펀지 (1)</span>
+    <div class="grid grid-cols-1 @md:grid-cols-2 gap-3 mb-5">
+      <div class="w-typecard" data-selectable="true">
+        <span class="w-ic"><i data-lucide="egg" style="width:20px;height:20px"></i></span>
+        <span class="flex-1 font-bold" style="color:var(--w-text)">붓세</span>
+        <i data-lucide="chevron-right" style="width:18px;height:18px;color:var(--w-muted)"></i>
+      </div>
+    </div>
+
+    <!-- 카테고리 14: 분리교반 -->
+    <span class="w-label">분리교반 (1)</span>
+    <div class="grid grid-cols-1 @md:grid-cols-2 gap-3 mb-5">
+      <div class="w-typecard" data-selectable="true">
+        <span class="w-ic"><i data-lucide="circle-dot" style="width:20px;height:20px"></i></span>
+        <span class="flex-1 font-bold" style="color:var(--w-text)">시폰케이크</span>
+        <i data-lucide="chevron-right" style="width:18px;height:18px;color:var(--w-muted)"></i>
+      </div>
+    </div>
+
+    <!-- 카테고리 15: 화학팽창 머핀 -->
+    <span class="w-label">화학팽창 머핀 (1)</span>
+    <div class="grid grid-cols-1 @md:grid-cols-2 gap-3 mb-5">
+      <div class="w-typecard" data-selectable="true">
+        <span class="w-ic"><i data-lucide="cookie" style="width:20px;height:20px"></i></span>
+        <span class="flex-1 font-bold" style="color:var(--w-text)">머핀(퀵브레드)</span>
+        <i data-lucide="chevron-right" style="width:18px;height:18px;color:var(--w-muted)"></i>
+      </div>
+    </div>
+
+    <!-- 카테고리 16: 스팀 팽창 -->
+    <span class="w-label">스팀 팽창 (1)</span>
+    <div class="grid grid-cols-1 @md:grid-cols-2 gap-3">
+      <div class="w-typecard" data-selectable="true">
+        <span class="w-ic"><i data-lucide="wind" style="width:20px;height:20px"></i></span>
+        <span class="flex-1 font-bold" style="color:var(--w-text)">슈</span>
         <i data-lucide="chevron-right" style="width:18px;height:18px;color:var(--w-muted)"></i>
       </div>
     </div>
@@ -423,7 +505,7 @@
     </div>
 
     <!-- scenario-0-b: 매칭 없음 -->
-    <span class="w-label">일치하는 빵이 없을 때 (예: "우주선")</span>
+    <span class="w-label">일치하는 품목이 없을 때 (예: "우주선")</span>
     <div class="w-search mb-2">
       <i data-lucide="search" style="width:16px;height:16px;color:var(--w-muted)"></i>
       <input type="text" value="우주선" />
@@ -431,18 +513,47 @@
     </div>
     <div class="w-empty">
       <i data-lucide="search-x" style="width:20px;height:20px;display:block;margin:0 auto 6px"></i>
-      일치하는 빵이 없어요.<br>검색어를 지우고 목록에서 골라 보세요.
+      일치하는 품목이 없어요.<br>검색어를 지우고 목록에서 골라 보세요.
     </div>
+
+    <hr class="w-divider">
+
+    <!-- scenario-0-e: 이름이 비슷한 기존 항목(잉글리시 머핀)과 신규 항목(머핀(퀵브레드)) 구분 -->
+    <span class="w-label">이름이 겹치는 품목 검색 — "머핀" 입력 시 (scenario-0-e)</span>
+    <div class="w-search mb-3">
+      <i data-lucide="search" style="width:16px;height:16px;color:var(--w-muted)"></i>
+      <input type="text" value="머핀" />
+      <i data-lucide="x" style="width:15px;height:15px;color:var(--w-muted);cursor:pointer"></i>
+    </div>
+    <div class="grid grid-cols-1 @md:grid-cols-2 gap-3">
+      <div class="w-typecard" data-selectable="true">
+        <span class="w-ic"><i data-lucide="pizza" style="width:20px;height:20px"></i></span>
+        <div class="flex-1">
+          <span class="block font-bold" style="color:var(--w-text)">잉글리시 머핀</span>
+          <span class="block text-xs" style="color:var(--w-muted)">발효 플랫브레드 · 빵</span>
+        </div>
+        <i data-lucide="chevron-right" style="width:18px;height:18px;color:var(--w-muted)"></i>
+      </div>
+      <div class="w-typecard" data-selectable="true">
+        <span class="w-ic"><i data-lucide="cookie" style="width:20px;height:20px"></i></span>
+        <div class="flex-1">
+          <span class="block font-bold" style="color:var(--w-text)">머핀(퀵브레드)</span>
+          <span class="block text-xs" style="color:var(--w-muted)">화학팽창 머핀 · 제과류</span>
+        </div>
+        <i data-lucide="chevron-right" style="width:18px;height:18px;color:var(--w-muted)"></i>
+      </div>
+    </div>
+    <p class="text-xs mt-2" style="color:var(--w-muted)">같은 "머핀"이라는 이름이지만 카테고리 라벨(발효 플랫브레드 vs 화학팽창 머핀)로 서로 다른 품목임을 구분한다.</p>
 
     <div class="screen-notes">
       <details open>
         <summary>Notes</summary>
-        <p>앱 진입 시 25종의 빵을 8개 카테고리로 묶어 보여주는 첫 화면. 모든 카드가 선택 가능하다("준비 중" 없음). 검색으로 이름을 좁힐 수 있다.</p>
+        <p>앱 진입 시 33개 품목(빵 25종 + 제과류 파일럿 8종)을 16개 카테고리로 묶어 보여주는 첫 화면. 모든 카드가 선택 가능하다("준비 중" 없음). 검색으로 이름을 좁힐 수 있다.</p>
         <ul>
-          <li>트리거: 앱 최초 진입. 어떤 빵도 선택되지 않은 상태로 시작.</li>
-          <li>인터랙션: 임의 빵 카드 탭 → 그 빵의 진단 화면으로 이동 / 검색란에 이름 입력 → 그리드가 매칭 카드로 좁혀짐 / 매칭 없음 → 빈 상태 안내 / 검색어 삭제 → 전체 25종 복원.</li>
-          <li>전환: 빵 카드 선택 → <b>진단</b> 화면(그 빵의 증상 세트로).</li>
-          <li>data-scenario: 카테고리 그리드 = scenario-0, 검색 좁힘/빈 상태 = scenario-0-b.</li>
+          <li>트리거: 앱 최초 진입. 어떤 품목도 선택되지 않은 상태로 시작.</li>
+          <li>인터랙션: 임의 품목 카드 탭 → 그 품목의 진단 화면으로 이동 / 검색란에 이름 입력 → 그리드가 매칭 카드로 좁혀짐 / 매칭 없음 → 빈 상태 안내 / 검색어 삭제 → 전체 33종 복원.</li>
+          <li>전환: 품목 카드 선택 → <b>진단</b> 화면(그 품목의 증상 세트로).</li>
+          <li>data-scenario: 카테고리 그리드 = scenario-0, 검색 좁힘/빈 상태 = scenario-0-b, 이름 충돌 구분 = scenario-0-e.</li>
         </ul>
       </details>
     </div>
@@ -451,7 +562,7 @@
 </div>
 
 <!-- ══════════════ 화면 1: 진단 (증상 선택 + 검색) ══════════════ -->
-<div id="screen-1" class="screen" data-scenario="scenario-1, scenario-2, scenario-5, scenario-6, scenario-0-a, scenario-0-c">
+<div id="screen-1" class="screen" data-scenario="scenario-1, scenario-2, scenario-5, scenario-6, scenario-0-a, scenario-0-a2, scenario-0-c">
   <div class="screen-content @container max-w-2xl mx-auto p-6">
 
     <div class="flex items-start justify-between gap-3 mb-1">
@@ -460,9 +571,9 @@
     </div>
     <p class="text-sm mb-3" style="color:var(--w-muted)">실패한 식빵의 증상을 골라 주세요. 여러 개일수록 원인이 좁혀집니다.</p>
 
-    <!-- 빵 다시 고르기 (scenario-0-c: 진단하기 전 증상 화면에서도 빵 선택으로 복귀 가능) -->
+    <!-- 다시 고르기 (scenario-0-c: 진단하기 전 증상 화면에서도 품목 선택으로 복귀 가능) -->
     <button class="w-btn-ghost mb-5" onclick="show(0)">
-      <i data-lucide="wheat" style="width:14px;height:14px"></i>빵 다시 고르기
+      <i data-lucide="layout-grid" style="width:14px;height:14px"></i>다시 고르기
     </button>
 
     <!-- 증상 검색 (보조 수단 · 항상 노출) -->
@@ -511,16 +622,35 @@
     </div>
     <p class="text-xs mt-2" style="color:var(--w-muted)">"옆구리·표면이 터짐"처럼 식빵 전용이던 증상은 여기 없다 — 대신 라미네이션 고유 증상(층·버터)이 들어간다.</p>
 
+    <hr class="w-divider">
+
+    <!-- scenario-0-a2: 제과류를 골라도 동일한 구조(체크리스트 → 순위 결과)를 따름을 보여주는 예시 -->
+    <span class="w-label">제과류 예시 — "마카롱"을 골랐다면 (scenario-0-a2, 파일럿 · 매트릭스 확정 전 예시 문구)</span>
+    <div class="flex items-start justify-between gap-3 mb-1">
+      <span class="text-sm font-bold" style="color:var(--w-text)">🍞 브레드 닥터</span>
+      <span class="w-badge"><i data-lucide="info" style="width:12px;height:12px"></i>마카롱 기준</span>
+    </div>
+    <p class="text-xs mb-3" style="color:var(--w-muted)">빵과도, 다른 제과류(휘낭시에)와도 다른 증상 목록 — 머랭 거품 구조 실패가 중심.</p>
+    <div class="grid grid-cols-1 @md:grid-cols-2 gap-2">
+      <div class="w-check" data-checked="false"><i class="w-box" data-lucide="square"></i>꼬끄에 삐에(다리)가 안 생김</div>
+      <div class="w-check" data-checked="false"><i class="w-box" data-lucide="square"></i>속이 비어요 (할로우 쉘)</div>
+      <div class="w-check" data-checked="false"><i class="w-box" data-lucide="square"></i>꼬끄 표면이 갈라짐</div>
+      <div class="w-check" data-checked="false"><i class="w-box" data-lucide="square"></i>꼬끄가 끈적이고 안 마름</div>
+      <div class="w-check" data-checked="false"><i class="w-box" data-lucide="square"></i>납작하게 퍼짐</div>
+      <div class="w-check" data-checked="false"><i class="w-box" data-lucide="square"></i>표면에 반점(눈물자국)</div>
+    </div>
+    <p class="text-xs mt-2" style="color:var(--w-muted)">위 증상 라벨은 매트릭스 문서 작성 전 구조 시연용 예시다 — 최종 문구는 spec 의존성에 명시된 파일럿 매트릭스 검증 후 확정된다.</p>
+
     <div class="screen-notes">
       <details open>
         <summary>Notes</summary>
-        <p>선택한 빵 종류의 실패 증상을 다중 선택해 진단을 시작하는 화면. 상단 검색은 목록을 좁히는 보조 수단. 증상 목록·범위 고지는 선택한 빵마다 달라진다(아래 크루아상 예시로 대비 시연).</p>
+        <p>선택한 품목의 실패 증상을 다중 선택해 진단을 시작하는 화면. 상단 검색은 목록을 좁히는 보조 수단. 증상 목록·범위 고지는 선택한 품목마다 달라진다(크루아상·마카롱 예시로 대비 시연).</p>
         <ul>
-          <li>트리거: 빵 선택 화면에서 특정 빵(예: "식빵")을 고른 뒤 진입. 증상 0개 상태로 시작 → 진단하기 비활성.</li>
-          <li>인터랙션: 증상 탭 → 체크 토글 / 검색어 입력 → 목록 필터(증상 검색 화면) / 증상 1개 이상 → 진단하기 활성 / "빵 다시 고르기" → 빵 선택 화면으로 이동(증상 선택 초기화).</li>
-          <li>전환: "진단하기" → 상위 원인이 근접하면 <b>판별 질문</b>, 명확하면 <b>결과</b> 화면 / "빵 다시 고르기" → <b>빵 선택</b> 화면.</li>
-          <li>불변: 범위 고지 배지(선택 빵 이름) 항상 노출.</li>
-          <li>data-scenario: 메인 체크리스트 = scenario-1/2/5/6(식빵 예시) · "빵 다시 고르기" 버튼 = scenario-0-c · 하단 크루아상 블록 = scenario-0-a(빵마다 세트가 다름을 증명).</li>
+          <li>트리거: 품목 선택 화면에서 특정 품목(예: "식빵")을 고른 뒤 진입. 증상 0개 상태로 시작 → 진단하기 비활성.</li>
+          <li>인터랙션: 증상 탭 → 체크 토글 / 검색어 입력 → 목록 필터(증상 검색 화면) / 증상 1개 이상 → 진단하기 활성 / "다시 고르기" → 품목 선택 화면으로 이동(증상 선택 초기화).</li>
+          <li>전환: "진단하기" → 상위 원인이 근접하면 <b>판별 질문</b>, 명확하면 <b>결과</b> 화면 / "다시 고르기" → <b>품목 선택</b> 화면.</li>
+          <li>불변: 범위 고지 배지(선택 품목 이름) 항상 노출.</li>
+          <li>data-scenario: 메인 체크리스트 = scenario-1/2/5/6(식빵 예시) · "다시 고르기" 버튼 = scenario-0-c · 크루아상 블록 = scenario-0-a(빵마다 세트가 다름) · 마카롱 블록 = scenario-0-a2(제과류도 동일 구조를 따름, 문구는 파일럿 예시).</li>
         </ul>
       </details>
     </div>
@@ -696,7 +826,7 @@
         <i data-lucide="rotate-ccw" style="width:15px;height:15px"></i>증상 바꿔 다시 진단
       </button>
       <button class="w-btn-ghost" onclick="show(0)">
-        <i data-lucide="wheat" style="width:15px;height:15px"></i>빵 다시 고르기
+        <i data-lucide="layout-grid" style="width:15px;height:15px"></i>다시 고르기
       </button>
     </div>
 
@@ -707,7 +837,7 @@
         <ul>
           <li>트리거: 진단하기 직후(명확한 경우) 또는 판별 질문 응답·건너뛰기 후 진입.</li>
           <li>인터랙션: 카드를 위→아래로 순위대로 읽음. 1순위는 테두리·번호로 강조. 강도는 "가능성 높음/중간" 라벨로만 표현.</li>
-          <li>인터랙션: "빵 다시 고르기" → <b>빵 선택</b> 화면으로 이동, 증상 선택·결과는 초기화됨(scenario-0-c).</li>
+          <li>인터랙션: "다시 고르기" → <b>품목 선택</b> 화면으로 이동, 증상 선택·결과는 초기화됨(scenario-0-c).</li>
           <li>전환: "증상 바꿔 다시 진단" → <b>진단</b> 화면으로 이동, 이전 결과는 사라짐.</li>
           <li>불변: 면책 고지 항상 노출 / 범위 고지 항상 노출 / 원시 점수·퍼센트는 노출하지 않음(순위·라벨만).</li>
           <li>data-scenario: 건너뛰기 시(scenario-4)에는 근접했던 두 원인 카드가 함께 표시됨.</li>
