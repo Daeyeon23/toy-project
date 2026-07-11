@@ -15,6 +15,10 @@ export const BREAD_CATEGORIES: BreadCategory[] = [
   { id: "melted-butter-creaming", label: "멜팅버터 · 크리밍", order: 10, domain: "pastry" },
   { id: "rubbed-dough", label: "러빙", order: 11, domain: "pastry" },
   { id: "meringue-foam", label: "머랭 거품", order: 12, domain: "pastry" },
+  { id: "whole-egg-foam-sponge", label: "전란 거품 스펀지", order: 13, domain: "pastry" },
+  { id: "separated-mixing", label: "분리교반", order: 14, domain: "pastry" },
+  { id: "chemical-leavened-muffin", label: "화학팽창 머핀", order: 15, domain: "pastry" },
+  { id: "steam-leavened", label: "스팀 팽창", order: 16, domain: "pastry" },
 ];
 
 export const BREAD_TYPES: BreadType[] = [
@@ -55,6 +59,11 @@ export const BREAD_TYPES: BreadType[] = [
   { id: "brownie", name: "브라우니", status: "available", category: "melted-butter-creaming" },
   { id: "tart", name: "타르트", status: "available", category: "rubbed-dough" },
   { id: "macaron", name: "마카롱", status: "available", category: "meringue-foam" },
+
+  { id: "bouchee", name: "붓세", status: "available", category: "whole-egg-foam-sponge" },
+  { id: "chiffon-cake", name: "시폰케이크", status: "available", category: "separated-mixing" },
+  { id: "quick-muffin", name: "머핀(퀵브레드)", status: "available", category: "chemical-leavened-muffin" },
+  { id: "choux", name: "슈", status: "available", category: "steam-leavened" },
 ];
 
 /** 상위 두 원인 점수 차가 이 값 이하면 근접으로 판정한다. */

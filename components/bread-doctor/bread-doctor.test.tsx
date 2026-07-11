@@ -26,6 +26,24 @@ describe("BreadDoctor", () => {
     ).not.toBeInTheDocument();
   });
 
+  it("Scenario 0-E: 잉글리시 머핀과 머핀(퀵브레드)는 이름이 겹쳐도 서로 다른 증상 세트를 쓴다 (회귀 없음)", async () => {
+    const { unmount } = render(<BreadDoctor />);
+    await userEvent.click(screen.getByRole("button", { name: "잉글리시 머핀" }));
+    expect(screen.getByText("잉글리시 머핀 기준")).toBeInTheDocument();
+    expect(
+      screen.getByLabelText("nooks and crannies 없이 조직이 조밀함"),
+    ).toBeInTheDocument();
+    unmount();
+
+    render(<BreadDoctor />);
+    await userEvent.click(screen.getByRole("button", { name: "머핀(퀵브레드)" }));
+    expect(screen.getByText("머핀(퀵브레드) 기준")).toBeInTheDocument();
+    expect(screen.getByLabelText("세로로 긴 구멍(터널)이 생김")).toBeInTheDocument();
+    expect(
+      screen.queryByLabelText("nooks and crannies 없이 조직이 조밀함"),
+    ).not.toBeInTheDocument();
+  });
+
   it("Scenario 0-A: 크루아상 선택 → 라미네이션 증상이 표시되고 식빵 전용 증상은 안 보인다", async () => {
     render(<BreadDoctor />);
 

@@ -45,7 +45,7 @@ describe("BreadTypePicker", () => {
     expect(screen.getAllByRole("button")).toHaveLength(1);
   });
 
-  it("머핀 입력 → 단어 단위 접두 매칭으로 잉글리시 머핀이 검색된다 (포함검색은 치아→포카치아 오탐을 유발하므로 미사용)", async () => {
+  it("Scenario 0-E: 머핀 입력 → 잉글리시 머핀과 머핀(퀵브레드)가 모두 나타나고 서로 다른 카테고리 그룹 아래 위치한다 (단어 단위 접두 매칭, 포함검색은 치아→포카치아 오탐을 유발하므로 미사용)", async () => {
     render(<BreadTypePicker breadTypes={BREAD_TYPES} onSelect={vi.fn()} />);
 
     await userEvent.type(
@@ -54,7 +54,9 @@ describe("BreadTypePicker", () => {
     );
 
     expect(screen.getByRole("button", { name: "잉글리시 머핀" })).toBeInTheDocument();
-    expect(screen.getAllByRole("button")).toHaveLength(1);
+    expect(screen.getByRole("button", { name: "머핀(퀵브레드)" })).toBeInTheDocument();
+    expect(screen.getAllByRole("button")).toHaveLength(2);
+    expect(screen.getByText("발효 플랫브레드")).toBeInTheDocument();
   });
 
   it("매칭되는 빵이 없는 검색어 → 안내가 표시되고, 지우면 25종 전체가 복원된다", async () => {
